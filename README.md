@@ -1,15 +1,15 @@
 # macime.nvim
 
 
-A wrapper plugin for [macime](https://github.com/riodelphino/macime).  
-`macime` is a faster IME switcher for macOS.
+A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.  
 
-`macime.nvim` enables `macime` in nvim without extra codings.
+`macime` cli is a faster IME switcher for macOS.
+`macime.nvim` integrate `macime` into nvim, without extra codings.
 
 
 ## Version
 
-`macime.nvim` v1.0.0
+`macime.nvim` v1.0.1
 
 
 ## Dependencies
@@ -23,7 +23,7 @@ for lazy.nvim:
 ```lua
 return {
    "riodelphino/macime.nvim",
-   event = "VeryLazy",
+   event = 'VimEnter',
    opts = {},
 }
 ```
@@ -32,19 +32,43 @@ return {
 
 defaults:
 ```lua
+---@type macime.Config
 local defaults = {
-   save_as = {
-      global = false, -- true|false: Save prev IME as globaly or per session_id
-   },
+   ttimeoutlen = nil, -- (number): If set, overwrite `vim.o.ttimeoutlen`. (Recommend: 0 - 50)
    ime = {
-      default = 'com.apple.keylayout.ABC', -- The default IME set in 'InsertLeave'
+      default = 'com.apple.keylayout.ABC', -- (strign): The default IME ID (set in 'InsertLeave')
    },
-   excludes = {
-      filetype = {}, -- Exclude specific filetypes (e.g. 'TelescopePrompt', 'snacks_picker_input' )
+   save = {
+      global = false, -- (bool): Save prev IME as globaly or per session_id
    },
-   ttimeoutlen = nil, -- If set, overwrite `vim.o.ttimeoutlen`. (Recommend: 0 - 50)
+   pattern = nil, -- (string|[string]): Enabled file patterns (e.g. "*" or { "*.h", "*.c" } )
+   exclude = {
+      filetype = {}, -- Exclude specific filetypes (e.g. { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' } )
+   },
 }
 ```
+
+## Known Issues
+
+### Shared IME ID
+
+The saved IME ID is shared between main|floating|split windows. This cause unintended IME restoring when entering to input-mode.
+A solution for now is adding these popup window filetypes to `opts.excludes.filetype`.
+
+(e.g.
+```lua
+exclude = {
+   filetype = {'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, 
+}
+```
+
+
+## TODO
+
+- [-] saving & loading
+   - [x] per-process-id
+   - [ ] per-window-id ?
+
 
 ## Changelog
 
