@@ -9,7 +9,7 @@ A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.
 
 ## Version
 
-`macime.nvim` v1.0.1
+`macime.nvim` v1.0.2
 
 
 ## Dependencies
@@ -23,7 +23,7 @@ for lazy.nvim:
 ```lua
 return {
    "riodelphino/macime.nvim",
-   event = 'VimEnter',
+   event = 'VimEnter', -- Changed from `VeryLazy` (for earlier autocmd registration & execution)
    opts = {},
 }
 ```
@@ -52,10 +52,9 @@ local defaults = {
 
 ### Shared IME ID
 
-The saved IME ID is shared between main|floating|split windows. This cause unintended IME restoring when entering to input-mode.
-A solution for now is adding these popup window filetypes to `opts.excludes.filetype`.
+The saved IME ID is shared between main|floating|split windows. This causes unintended IME restoring when entering to input-mode.  
 
-(e.g.
+A solution for now is adding these window filetypes to `opts.exclude.filetype`:
 ```lua
 exclude = {
    filetype = {'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, 

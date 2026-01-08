@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## v1.0.2 - 2026-01-09
+
+### Changed
+- Chore `README.md`
+
 ## v1.0.1 - 2026-01-09
 
 ### Changed
