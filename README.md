@@ -9,7 +9,7 @@ A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.
 
 ## Version
 
-`macime.nvim` v1.0.2
+`macime.nvim` v1.0.3
 
 
 ## Dependencies
@@ -66,7 +66,11 @@ exclude = {
 
 - [-] saving & loading
    - [x] per-process-id
-   - [ ] per-window-id ?
+   - [ ] per-winid saving? (e.g. `nvim-{pid}-{winid}`)
+       - To solve the above [issure](#shared-ime-id).
+       - (This make `macime` cli generate too many stored files... Not ideal.)
+   - [ ] in cmdline-mode too?
+       - (Already tried it, but it wasn't really necessary. It also complicates the code.)
 
 
 ## Changelog
