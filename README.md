@@ -71,6 +71,7 @@ exclude = {
        - (This make `macime` cli generate too many stored files... Not ideal.)
    - [ ] in cmdline-mode too?
        - (Already tried it, but it wasn't really necessary. It also complicates the code.)
+- [ ] Does it slow down the macro which repeats `Insert{Leave|Enter}`?
 
 
 ## Changelog
@@ -86,5 +87,6 @@ MIT License. See [LICENSE](LICENSE)
 ## Related
 
 - [im-select](https://github.com/daipeihust/im-select)
+- [vim-barbaric](https://github.com/rlue/vim-barbaric)
 - [macism](https://github.com/laishulu/macism)
 
