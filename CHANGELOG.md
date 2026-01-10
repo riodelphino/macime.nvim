@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## v1.0.4 - 2026-01-10
+
+### Changed
+- Add checking `macime` cli exists
+- Replace `vim.jobstart()` to `vim.loop.spawn()` (slightely faster)
+
 ## v1.0.3 - 2026-01-09
 
 ### Changed

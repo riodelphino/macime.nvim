@@ -9,7 +9,7 @@ A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.
 
 ## Version
 
-`macime.nvim` v1.0.3
+`macime.nvim` v1.0.4
 
 
 ## Dependencies

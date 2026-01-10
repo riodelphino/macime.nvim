@@ -26,24 +26,24 @@ local function get_session_id()
    return session_id
 end
 
----@return table cmd
-local function get_save_cmd()
+---@return table args
+local function get_save_args()
    if opts.save.global then
-      cmd = { 'macime', 'set', opts.ime.default, '--save' }
+      args = { 'set', opts.ime.default, '--save' }
    else
-      cmd = { 'macime', 'set', opts.ime.default, '--save', '--session-id', get_session_id() }
+      args = { 'set', opts.ime.default, '--save', '--session-id', get_session_id() }
    end
-   return cmd
+   return args
 end
 
----@return table cmd
-local function get_load_cmd()
+---@return table args
+local function get_load_args()
    if opts.save.global then
-      cmd = { 'macime', 'load' }
+      args = { 'load' }
    else
-      cmd = { 'macime', 'load', '--session-id', get_session_id() }
+      args = { 'load', '--session-id', get_session_id() }
    end
-   return cmd
+   return args
 end
 
 ---@param filetype string
@@ -62,8 +62,11 @@ local function add_autocmd()
       desc = 'macime.nvim - Save current IME & switch to the `default` IME',
       callback = function()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
-         local cmd = get_save_cmd()
-         if buf_allowed then vim.fn.jobstart(cmd) end
+         if buf_allowed then vim.loop.spawn('macime', {
+            args = get_save_args(),
+            stdio = { nil, nil, nil },
+            detach = true,
+         }) end
       end,
    })
    vim.api.nvim_create_autocmd('InsertEnter', {
@@ -72,14 +75,22 @@ local function add_autocmd()
       pattern = opts.pattern,
       callback = function()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
-         local cmd = get_load_cmd()
-         if buf_allowed then vim.fn.jobstart(cmd) end
+         if buf_allowed then vim.loop.spawn('macime', {
+            args = get_load_args(),
+            stdio = { nil, nil, nil },
+            detach = true,
+         }) end
       end,
    })
 end
 
 ---@param user_config macime.Config
 function M.setup(user_config)
+   local macime_exists = (vim.fn.executable('macime') == 1)
+   if not macime_exists then
+      local msg = '\n\nThe `macime` command was not found.\n\nPlease install it first:\n   brew tap riodelphino/tap\n   brew install riodelphino/tap/macime'
+      error(msg, vim.log.levels.ERROR)
+   end
    opts = vim.tbl_deep_extend('force', defaults, user_config)
    if opts.ttimeoutlen then vim.o.ttimeoutlen = opts.ttimeoutlen end
    add_autocmd()
