@@ -48,18 +48,34 @@ local defaults = {
 }
 ```
 
-## Known Issues
+## Issues
 
 ### Shared IME ID
 
-The saved IME ID is shared between main|floating|split windows. This causes unintended IME restoring when entering to input-mode.  
+The saved IME ID is shared between nvim's main|floating|split windows. This causes unintended IME restoring when entering to input-mode.  
 
-A solution for now is adding these window filetypes to `opts.exclude.filetype`:
+A solution for now:
+
+Adding these window filetypes to `opts.exclude.filetype`:
 ```lua
 exclude = {
    filetype = {'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, 
 }
 ```
+
+### IME mode unchanged by Karabiner
+
+Rarely it becomes impossible to set the IME mode `ON` by `right_command` key with `karabiner`.
+
+My Karabiner config:
+   - `left_command` key sends `japanese_eisuu` key (IME OFF)
+   - `right_command` key sends `japanese_kana` key (IME ON)
+
+Which is this issue releated to `macime` or `Karabiner`?
+
+Solutions:
+   - Set the IME `OFF` once by `left_command` key, then `right_command` key works.
+   - Or, open another app window (e.g. `Safari.app`), then return to terminal. `right_command` key works again.
 
 
 ## TODO

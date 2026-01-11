@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## v1.0.5 - 2026-01-11
+
+### Changed
+- Add issue
+
 ## v1.0.4 - 2026-01-10
 
 ### Changed
