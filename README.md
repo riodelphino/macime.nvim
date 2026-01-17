@@ -7,11 +7,6 @@ A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.
 `macime.nvim` integrate `macime` into nvim, without extra codings.
 
 
-## Version
-
-`macime.nvim` v1.0.4
-
-
 ## Dependencies
 
 - [macime](https://github.com/riodelphino/macime) >= v2.0.0
@@ -80,14 +75,23 @@ Solutions:
 
 ## TODO
 
-- [-] saving & loading
-   - [x] per-process-id
-   - [ ] per-winid saving? (e.g. `nvim-{pid}-{winid}`)
-       - To solve the above [issure](#shared-ime-id).
-       - (This make `macime` cli generate too many stored files... Not ideal.)
-   - [ ] in cmdline-mode too?
-       - (Already tried it, but it wasn't really necessary. It also complicates the code.)
-- [ ] Does it slow down the macro which repeats `Insert{Leave|Enter}`?
+### Save & Load
+
+- [x] Per nvim PID  
+  Save as `nvim-{pid}`.  
+  Currently working; verifying whether this granularity is sufficient.
+
+- [ ] Per nvim PID + window ID  
+  Save as `nvim-{pid}-{winid}`.  
+  Intended to solve [this issue](#shared-ime-id), but may generate too many files. Not ideal.
+
+- [ ] Enable in command-line mode  
+  Tried once, but benefits were limited and code complexity increased.
+
+### Others
+
+- [ ] Macro compatibility  
+  Concern: repeated `macime` execution on `InsertLeave` / `InsertEnter` may slow down macro playback.
 
 
 ## Changelog
