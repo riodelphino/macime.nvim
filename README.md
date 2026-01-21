@@ -55,6 +55,32 @@ local defaults = {
 }
 ```
 
+### Recommended
+
+```lua
+---@type macime.Config
+local defaults = {
+   ttimeoutlen = 0, -- Reduce delay after InsertLeave and InsertEnter
+   save = {
+      global = false, -- Save prevous IME per nvim pid
+   },
+   service = {
+      enabled = true, -- Enable `macimed` launchd service for blazing faster switching
+   },
+   exclude = {
+      filetype = { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, -- Exclude specific filetypes
+   },
+}
+```
+
+**- macimed -**
+With above recommended settings, ensure followings:
+* [macime](https://github.com/riodelphino/macime) >= 3.0.1 is installed (`macimed` is bundled)
+* `macimed` is enabled via launchd service
+
+See more details at: [riodelphino/macime](https://github.com/riodelphino/macime)
+
+
 ## Issues
 
 ### Shared IME ID
