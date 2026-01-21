@@ -44,7 +44,7 @@ local defaults = {
       global = false, -- (bool): Save prev IME as globaly or per session_id
    },
    service = {
-      -- Ensure macime >= v3.0.1 and the service started
+      -- Ensure macime >= v3.0.1 installed and the service started
       enabled = false, -- (bool): True to use launchd service for faster switching
    },
    pattern = nil, -- (string|[string]): Enabled file patterns (e.g. "*" or { "*.h", "*.c" } )
@@ -77,7 +77,7 @@ My Karabiner config:
    - `left_command` key sends `japanese_eisuu` key (IME OFF)
    - `right_command` key sends `japanese_kana` key (IME ON)
 
-Same issue was found in GUI Apps.  
+Same issue was also found in GUI Apps.  
 Which is this issue releated to `macime` or `Karabiner`?
 
 Solutions:
