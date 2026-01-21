@@ -3,13 +3,20 @@
 
 A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.  
 
-`macime` cli is a faster IME switcher for macOS.
-`macime.nvim` integrate `macime` into nvim, without extra codings.
+[macime](https://github.com/riodelphino/macime) cli is a blazing faster IME switcher for macOS.
+This plugin integrates [macime](https://github.com/riodelphino/macime) cli into nvim, without extra codings.
+
+Noticiably faster than other similar tools, low latency.
 
 
 ## Dependencies
 
-- [macime](https://github.com/riodelphino/macime) >= v2.0.0
+- [macime](https://github.com/riodelphino/macime)
+
+| Version  | launchd | Speed | Note               |
+| -------- | :-----: | :---: | ------------------ |
+| >= 3.0.1 |    o    |   o   | Faster / Recommend |
+| >= 2.0.0 |    -    |   △   | Also works         |
 
 
 ## Install
@@ -31,10 +38,14 @@ defaults:
 local defaults = {
    ttimeoutlen = nil, -- (number): If set, overwrite `vim.o.ttimeoutlen`. (Recommend: 0 - 50)
    ime = {
-      default = 'com.apple.keylayout.ABC', -- (strign): The default IME ID (set in 'InsertLeave')
+      default = 'com.apple.keylayout.ABC', -- (string): The default IME ID (set in 'InsertLeave')
    },
    save = {
       global = false, -- (bool): Save prev IME as globaly or per session_id
+   },
+   service = {
+      -- Ensure macime >= v3.0.1 and the service started
+      enabled = true, -- (bool): Use launchd service for faster switching
    },
    pattern = nil, -- (string|[string]): Enabled file patterns (e.g. "*" or { "*.h", "*.c" } )
    exclude = {
@@ -66,6 +77,7 @@ My Karabiner config:
    - `left_command` key sends `japanese_eisuu` key (IME OFF)
    - `right_command` key sends `japanese_kana` key (IME ON)
 
+Same issue was found in GUI Apps.  
 Which is this issue releated to `macime` or `Karabiner`?
 
 Solutions:
