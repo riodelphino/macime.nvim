@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## [v2.0.2](https://github.com/riodelphino/macime.nvim/compare/v2.0.1...v2.0.2) (2026-01-21)
+
+* **refactor:** Change `msgs.lua` to `messages.lua`
+* **revert:** Include type definitions to `init.lua` for better performance
+
 ## [v2.0.1](https://github.com/riodelphino/macime.nvim/compare/v2.0.0...v2.0.1) (2026-01-21)
 
 * **docs:** Add recommended config

@@ -1,4 +1,5 @@
 require('macime.types')
+local msgs = require('macime.messages')
 
 local M = {}
 
@@ -150,7 +151,7 @@ end
 function M.setup(user_config)
    local macime_exists = (vim.fn.executable('macime') == 1)
    if not macime_exists then
-      local msg = '\n\nThe `macime` command was not found.\n\nPlease install it first:\n   brew tap riodelphino/tap\n   brew install riodelphino/tap/macime'
+      local msg = msgs.macime_not_installed
       error(msg, vim.log.levels.ERROR)
    end
    opts = vim.tbl_deep_extend('force', defaults, user_config)
