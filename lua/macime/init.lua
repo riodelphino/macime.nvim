@@ -55,6 +55,7 @@ function M.send(args, cb)
          end
 
          -- Recieve response
+         local chunks = {}
          pipe:read_start(function(read_err, data)
             if read_err then
                local msg = 'Read failed: ' .. read_err
@@ -62,17 +63,11 @@ function M.send(args, cb)
                pipe:close()
                if type(cb) == 'function' then cb(false, msg) end
                return
-            end
-
-            if data then
-               -- print('[macime.nvim] Response: ' .. data) -- DEBUG:
-               if type(cb) == 'function' then cb(true, data) end
-               return
+            elseif data then
+               table.insert(chunks, data)
             else
-               -- EOF
                pipe:close()
-               if type(cb) == 'function' then cb(false, nil) end
-               return
+               if type(cb) == 'function' then cb(true, table.concat(chunks)) end
             end
          end)
       end)

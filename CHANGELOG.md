@@ -2,6 +2,7 @@
 
 ## [v2.0.2](https://github.com/riodelphino/macime.nvim/compare/v2.0.1...v2.0.2) (2026-01-21)
 
+* **fix:** Recieve all chunks from pipe
 * **chore:** Remove debug code
 * **feat:** Add `check_health()` / Add cb arg to `send()`
 * **refactor:** Change `msgs.lua` to `messages.lua`
