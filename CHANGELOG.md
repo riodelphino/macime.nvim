@@ -1,7 +1,9 @@
 # CHANGELOG.md
 
+
 ## [v2.0.2](https://github.com/riodelphino/macime.nvim/compare/v2.0.1...v2.0.2) (2026-01-22)
 
+* **fix:** Check `macimed` running only if `opts.service.enabled` is `true`
 * **docs:** Refine
 * **refactor:** Improve message wording and formatting
 * **fix:** Recieve all chunks from pipe

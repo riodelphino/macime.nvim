@@ -160,11 +160,13 @@ function check_health()
    end
 
    -- Check macimed service running (Async)
-   M.send({ 'get' }, function(ok, data)
-      -- if not ok and msg then vim.notify(msgs.setup.macimed_service_not_running, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
-      local msg = msgs.setup.macimed_service_not_running
-      if not ok and data then vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
-   end)
+   if opts.service.enabled then
+      M.send({ 'get' }, function(ok, data)
+         -- if not ok and msg then vim.notify(msgs.setup.macimed_service_not_running, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
+         local msg = msgs.setup.macimed_service_not_running
+         if not ok and data then vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
+      end)
+   end
 end
 
 ---Setup
