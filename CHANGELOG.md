@@ -2,6 +2,7 @@
 
 ## [v2.0.2](https://github.com/riodelphino/macime.nvim/compare/v2.0.1...v2.0.2) (2026-01-21)
 
+* **chore:** Remove debug code
 * **feat:** Add `check_health()` / Add cb arg to `send()`
 * **refactor:** Change `msgs.lua` to `messages.lua`
 * **revert:** Include type definitions to `init.lua` for better performance

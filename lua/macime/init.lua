@@ -143,7 +143,6 @@ local function add_autocmd()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
          if buf_allowed then
             local args = get_load_args()
-            print('args: ' .. vim.inspect(args)) -- DEBUG:
             if opts.service.enabled then
                M.send(args) -- macimed service
             else
