@@ -15,8 +15,8 @@ Noticiably faster than other similar tools, low latency.
 
 | Version  | launchd | Speed | Note               |
 | -------- | :-----: | :---: | ------------------ |
-| >= 3.0.1 |    o    |   o   | Faster / Recommend |
-| >= 2.0.0 |    -    |   △   | Also works         |
+| macime >= 3.0.1 |    o    |   o   | Faster / Recommend |
+| macime >= 2.0.0 |    -    |   △   | Also works         |
 
 
 ## Install
