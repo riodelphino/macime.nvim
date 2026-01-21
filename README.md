@@ -45,7 +45,7 @@ local defaults = {
    },
    service = {
       -- Ensure macime >= v3.0.1 and the service started
-      enabled = true, -- (bool): Use launchd service for faster switching
+      enabled = false, -- (bool): True to use launchd service for faster switching
    },
    pattern = nil, -- (string|[string]): Enabled file patterns (e.g. "*" or { "*.h", "*.c" } )
    exclude = {
