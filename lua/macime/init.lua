@@ -27,41 +27,52 @@ local opts = {}
 
 ---Send a sub command and options to `macimed` launchd service
 ---@param args table|string
-function M.send(args)
+---@param cb fun(ok: boolean, data: string?)?
+function M.send(args, cb)
    local pipe = vim.uv.new_pipe(false)
 
    if type(args) == 'table' then args = table.concat(args, ' ') end
 
    -- TODO: Add check for the service exists
 
-   vim.uv.pipe_connect(pipe, opts.service.sock_path, function(err)
-      if err then
-         print('[macime.nvim] Connection failed: ' .. err)
+   vim.uv.pipe_connect(pipe, opts.service.sock_path, function(connect_err)
+      if connect_err then
+         local msg = 'Connection failed: ' .. connect_err
+         vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
          pipe:close()
+         if type(cb) == 'function' then cb(false, msg) end
          return
       end
 
       -- Send command
       pipe:write(args .. '\n', function(write_err)
          if write_err then
-            print('[macime.nvim] Write failed: ' .. write_err)
+            local msg = 'Write failed: ' .. write_err
+            vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
             pipe:close()
+            if type(cb) == 'function' then cb(false, msg) end
             return
          end
 
          -- Recieve response
          pipe:read_start(function(read_err, data)
             if read_err then
-               print('[macime.nvim] Read failed: ' .. read_err)
+               local msg = 'Read failed: ' .. read_err
+               vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
                pipe:close()
+               if type(cb) == 'function' then cb(false, msg) end
                return
             end
 
             if data then
                -- print('[macime.nvim] Response: ' .. data) -- DEBUG:
+               if type(cb) == 'function' then cb(true, data) end
+               return
             else
                -- EOF
                pipe:close()
+               if type(cb) == 'function' then cb(false, nil) end
+               return
             end
          end)
       end)
@@ -132,7 +143,7 @@ local function add_autocmd()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
          if buf_allowed then
             local args = get_load_args()
-            print('args: ' .. vim.inspect('args: '))
+            print('args: ' .. vim.inspect(args)) -- DEBUG:
             if opts.service.enabled then
                M.send(args) -- macimed service
             else
@@ -147,14 +158,26 @@ local function add_autocmd()
    })
 end
 
----@param user_config macime.Config
-function M.setup(user_config)
+---Check system
+function check_health()
+   -- Check macime installed
    local macime_exists = (vim.fn.executable('macime') == 1)
    if not macime_exists then
       local msg = msgs.macime_not_installed
       error(msg, vim.log.levels.ERROR)
    end
+
+   -- Check macimed service running (Async)
+   M.send({ 'get' }, function(ok, msg)
+      if not ok and msg then vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
+   end)
+end
+
+---Setup
+---@param user_config macime.Config
+function M.setup(user_config)
    opts = vim.tbl_deep_extend('force', defaults, user_config)
+   check_health()
    if opts.ttimeoutlen then vim.o.ttimeoutlen = opts.ttimeoutlen end
    add_autocmd()
 end
