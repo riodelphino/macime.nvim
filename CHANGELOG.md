@@ -2,7 +2,6 @@
 
 ## [v2.0.1](https://github.com/riodelphino/macime.nvim/compare/v2.0.0...v2.0.1) (2026-01-21)
 
-* **perf:** Include type definitions into `init.lua` for better performance
 * **docs:** Add recommended config
 * **docs:** Modify comment for sock_path
 * **docs:** Chore
