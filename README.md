@@ -46,6 +46,7 @@ local defaults = {
    service = {
       -- Ensure macime >= v3.0.1 installed and the service started
       enabled = false, -- (bool): True to use launchd service for faster switching
+      sock_path = '/tmp/riodelphino.macimed.sock', -- (string): The sock path to listen (Usually no need to change)
    },
    pattern = nil, -- (string|[string]): Enabled file patterns (e.g. "*" or { "*.h", "*.c" } )
    exclude = {
