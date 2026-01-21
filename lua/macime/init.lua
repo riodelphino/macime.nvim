@@ -33,11 +33,9 @@ function M.send(args, cb)
 
    if type(args) == 'table' then args = table.concat(args, ' ') end
 
-   -- TODO: Add check for the service exists
-
    vim.uv.pipe_connect(pipe, opts.service.sock_path, function(connect_err)
       if connect_err then
-         local msg = 'Connection failed: ' .. connect_err
+         local msg = string.format('Connect failed: %s\n\n%s', connect_err, msgs.pipe.connect_failed)
          vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
          pipe:close()
          if type(cb) == 'function' then cb(false, msg) end
@@ -47,7 +45,7 @@ function M.send(args, cb)
       -- Send command
       pipe:write(args .. '\n', function(write_err)
          if write_err then
-            local msg = 'Write failed: ' .. write_err
+            local msg = string.format('Write failed: %s\n\n%s', write_err, msgs.pipe.write_failed)
             vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
             pipe:close()
             if type(cb) == 'function' then cb(false, msg) end
@@ -58,7 +56,7 @@ function M.send(args, cb)
          local chunks = {}
          pipe:read_start(function(read_err, data)
             if read_err then
-               local msg = 'Read failed: ' .. read_err
+               local msg = string.format('Read failed: %s\n\n%s', read_err, msgs.pipe.read_failed)
                vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
                pipe:close()
                if type(cb) == 'function' then cb(false, msg) end
@@ -157,13 +155,15 @@ function check_health()
    -- Check macime installed
    local macime_exists = (vim.fn.executable('macime') == 1)
    if not macime_exists then
-      local msg = msgs.macime_not_installed
-      error(msg, vim.log.levels.ERROR)
+      local msg = msgs.setup.macime_not_installed
+      vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
    end
 
    -- Check macimed service running (Async)
-   M.send({ 'get' }, function(ok, msg)
-      if not ok and msg then vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
+   M.send({ 'get' }, function(ok, data)
+      -- if not ok and msg then vim.notify(msgs.setup.macimed_service_not_running, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
+      local msg = msgs.setup.macimed_service_not_running
+      if not ok and data then vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
    end)
 end
 
