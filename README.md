@@ -3,7 +3,7 @@
 
 A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.  
 
-[macime](https://github.com/riodelphino/macime) cli is a blazing faster IME switcher for macOS.
+[macime](https://github.com/riodelphino/macime) cli is a blazing faster IME switcher for macOS.  
 This plugin integrates [macime](https://github.com/riodelphino/macime) cli into nvim, without extra codings.
 
 
@@ -11,10 +11,10 @@ This plugin integrates [macime](https://github.com/riodelphino/macime) cli into 
 
 - [macime](https://github.com/riodelphino/macime)
 
-| Version  | launchd | Speed | Note               |
-| -------- | :-----: | :---: | ------------------ |
-| macime >= 3.0.1 |    o    |   o   | Faster / Recommend |
-| macime >= 2.0.0 |    -    |   △   | Also works         |
+| Version         | launchd | Speed | Note                 |
+| --------------- | :-----: | :---: | -------------------- |
+| macime >= 3.0.1 |    o    |   o   | Faster / Recommended |
+| macime >= 2.0.0 |    -    |   △   | Also works           |
 
 
 ## Install
