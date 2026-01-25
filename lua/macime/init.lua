@@ -85,6 +85,7 @@ local function get_save_args()
    else
       args = { 'set', opts.ime.default, '--save', '--session-id', get_session_id() }
    end
+   if opts.service.enabled then table.insert(args, '--launchd') end
    return args
 end
 
@@ -95,6 +96,7 @@ local function get_load_args()
    else
       args = { 'load', '--session-id', get_session_id() }
    end
+   if opts.service.enabled then table.insert(args, '--launchd') end
    return args
 end
 

@@ -1,7 +1,8 @@
 # CHANGELOG.md
 
-## [v2.0.3](https://github.com/riodelphino/macime.nvim/compare/v2.0.2...v2.0.3) (2026-01-22)
+## [v2.1.0](https://github.com/riodelphino/macime.nvim/compare/v2.0.2...v2.1.0) (2026-01-25)
 
+* **chore:** Add `--launchd` option adapt to `macime` v3.1.1
 * **docs:** typo / line feed
 
 ## [v2.0.2](https://github.com/riodelphino/macime.nvim/compare/v2.0.1...v2.0.2) (2026-01-22)
