@@ -78,6 +78,22 @@ With above recommended settings, ensure followings:
 See more details at: [riodelphino/macime](https://github.com/riodelphino/macime)
 
 
+## Checkhealth
+
+The checkhealth command is available:
+```vim
+:checkhealth macime
+```
+
+It shows diagnostic information and gives useful advices about:
+- Command version
+- Capability
+- Selected Backend
+- Ime default
+- Socket
+- Homebrew Service
+
+
 ## Issues
 
 ### Shared IME ID

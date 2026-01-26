@@ -23,7 +23,7 @@ local defaults = {
 }
 
 ---@type macime.Config
-local opts = {}
+M.opts = {}
 
 ---Send a sub command and options to `macimed` launchd service
 ---@param args table|string
@@ -33,7 +33,7 @@ function M.send(args, cb)
 
    if type(args) == 'table' then args = table.concat(args, ' ') end
 
-   vim.uv.pipe_connect(pipe, opts.service.sock_path, function(connect_err)
+   vim.uv.pipe_connect(pipe, M.opts.service.sock_path, function(connect_err)
       if connect_err then
          local msg = string.format('Connect failed: %s\n\n%s', connect_err, msgs.pipe.connect_failed)
          vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
@@ -80,30 +80,30 @@ end
 
 ---@return table args
 local function get_save_args()
-   if opts.save.global then
-      args = { 'set', opts.ime.default, '--save' }
+   if M.opts.save.global then
+      args = { 'set', M.opts.ime.default, '--save' }
    else
-      args = { 'set', opts.ime.default, '--save', '--session-id', get_session_id() }
+      args = { 'set', M.opts.ime.default, '--save', '--session-id', get_session_id() }
    end
-   if opts.service.enabled then table.insert(args, '--launchd') end
+   if M.opts.service.enabled then table.insert(args, '--launchd') end
    return args
 end
 
 ---@return table args
 local function get_load_args()
-   if opts.save.global then
+   if M.opts.save.global then
       args = { 'load' }
    else
       args = { 'load', '--session-id', get_session_id() }
    end
-   if opts.service.enabled then table.insert(args, '--launchd') end
+   if M.opts.service.enabled then table.insert(args, '--launchd') end
    return args
 end
 
 ---@param filetype string
 ---@return boolean allowed
 local function is_excluded_filetype(filetype)
-   local is_excluded = vim.tbl_contains(opts.exclude.filetype, filetype)
+   local is_excluded = vim.tbl_contains(M.opts.exclude.filetype, filetype)
    return is_excluded
 end
 
@@ -112,13 +112,13 @@ local function add_autocmd()
 
    vim.api.nvim_create_autocmd('InsertLeave', {
       group = augroup,
-      pattern = opts.pattern,
+      pattern = M.opts.pattern,
       desc = 'macime.nvim - Save current IME & switch to the `default` IME',
       callback = function()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
          if buf_allowed then
             local args = get_save_args()
-            if opts.service.enabled then
+            if M.opts.service.enabled then
                M.send(args) -- macimed service
             else
                vim.loop.spawn('macime', {
@@ -133,12 +133,12 @@ local function add_autocmd()
    vim.api.nvim_create_autocmd('InsertEnter', {
       group = augroup,
       desc = 'macime.nvim - Restore previous IME',
-      pattern = opts.pattern,
+      pattern = M.opts.pattern,
       callback = function()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
          if buf_allowed then
             local args = get_load_args()
-            if opts.service.enabled then
+            if M.opts.service.enabled then
                M.send(args) -- macimed service
             else
                vim.loop.spawn('macime', {
@@ -152,31 +152,11 @@ local function add_autocmd()
    })
 end
 
----Check system
-function check_health()
-   -- Check macime installed
-   local macime_exists = (vim.fn.executable('macime') == 1)
-   if not macime_exists then
-      local msg = msgs.setup.macime_not_installed
-      vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
-   end
-
-   -- Check macimed service running (Async)
-   if opts.service.enabled then
-      M.send({ 'get' }, function(ok, data)
-         -- if not ok and msg then vim.notify(msgs.setup.macimed_service_not_running, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
-         local msg = msgs.setup.macimed_service_not_running
-         if not ok and data then vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' }) end
-      end)
-   end
-end
-
 ---Setup
 ---@param user_config macime.Config
 function M.setup(user_config)
-   opts = vim.tbl_deep_extend('force', defaults, user_config)
-   check_health()
-   if opts.ttimeoutlen then vim.o.ttimeoutlen = opts.ttimeoutlen end
+   M.opts = vim.tbl_deep_extend('force', defaults, user_config)
+   if M.opts.ttimeoutlen then vim.o.ttimeoutlen = M.opts.ttimeoutlen end
    add_autocmd()
 end
 

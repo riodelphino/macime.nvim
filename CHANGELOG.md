@@ -1,7 +1,8 @@
 # CHANGELOG.md
 
-## [v2.1.1](https://github.com/riodelphino/macime.nvim/compare/v2.1.0...v2.1.1) (2026-01-26)
+## [v2.1.1](https://github.com/riodelphino/macime.nvim/compare/v2.1.0...v2.1.1) (2026-01-28)
 
+* **feat:** Add `:checkhealth`
 * **docs:** Upgrade compatible `macime` version to v3.1.1 (keep v2.0.0 remained)
 
 ## [v2.1.0](https://github.com/riodelphino/macime.nvim/compare/v2.0.2...v2.1.0) (2026-01-25)

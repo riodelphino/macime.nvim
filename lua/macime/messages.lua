@@ -1,19 +1,40 @@
 local messages = {
    setup = {
-      macime_not_installed = [[
-The `macime` command was not found.
+      macime = {
+         not_installed = [[
+The `macime` command not found.
+
+Please install it with:
+   brew tap riodelphino/tap
+   brew install macime
+         ]],
+         version_incompatible = [[
+The `macime` version incompatible.
+
+>=v 3.1.1 for launchd service (Faster/Recommended)
+>=v 2.0.0 also works (Slower/launchd not supported)
+
+Please upgrade it with:
+   brew update
+   brew upgrade macime
+         ]],
+      },
+      macimed = {
+         not_installed = [[
+The `macimed` command not found.
 
 Please install it first:
    brew tap riodelphino/tap
    brew install macime
-      ]],
-      macimed_service_not_running = [[
+         ]],
+         service_not_running = [[
 `opts.service.enabled` is set to `true`, but `macimed` is not running.
 
 Please start `macimed` via:
    - Run `brew services start macime`
    - or start `macimed` manually (for testing)
-      ]],
+         ]],
+      },
    },
    pipe = {
       connect_failed = [[
