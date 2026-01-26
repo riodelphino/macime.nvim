@@ -13,7 +13,7 @@ This plugin integrates [macime](https://github.com/riodelphino/macime) cli into 
 
 | Version         | launchd | Speed | Note                 |
 | --------------- | :-----: | :---: | -------------------- |
-| macime >= 3.0.1 |    o    |   o   | Faster / Recommended |
+| macime >= 3.1.1 |    o    |   o   | Faster / Recommended |
 | macime >= 2.0.0 |    -    |   △   | Also works           |
 
 

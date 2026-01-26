@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.1.1](https://github.com/riodelphino/macime.nvim/compare/v2.1.0...v2.1.1) (2026-01-26)
+
+* **docs:** Upgrade compatible `macime` version to v3.1.1 (keep v2.0.0 remained)
+
 ## [v2.1.0](https://github.com/riodelphino/macime.nvim/compare/v2.0.2...v2.1.0) (2026-01-25)
 
 * **chore:** Add `--launchd` option adapt to `macime` v3.1.1
