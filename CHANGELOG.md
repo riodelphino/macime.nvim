@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.1.3](https://github.com/riodelphino/macime.nvim/compare/v2.1.2...v2.1.3) (2026-01-31)
+
+* **docs:** Add `plist` category to checkhealth list
+
 ## [v2.1.2](https://github.com/riodelphino/macime.nvim/compare/v2.1.1...v2.1.2) (2026-01-30)
 
 * **chore:** Refine `:checkhealth` to get plist

@@ -89,9 +89,10 @@ It shows diagnostic information and gives useful advices about:
 - Command version
 - Capability
 - Selected Backend
-- Ime default
+- IME default
 - Socket
 - Homebrew Service
+- plist
 
 
 ## Issues
