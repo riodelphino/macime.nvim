@@ -41,7 +41,7 @@ function M.get_health()
       local ok = vim.fn.system({
          'sh',
          '-c',
-         string.format('nc -U %q < /dev/null >/dev/null 2>&1; echo $?', opts.service.sock_path),
+         string.format('nc -U %q < /dev/null >/dev/null 2>&1; echo $?', opts.socket.path),
       })
       h.macimed_status = ok:match('^0') and 'running' or 'stopped'
    end
@@ -132,7 +132,7 @@ function M.check()
    end
 
    vim.health.start('Selected Backend')
-   health.info(opts.service.enabled and '`macimed` (socket)' or '`macime` (direct)')
+   health.info(opts.socket.enabled and '`macimed` (socket)' or '`macime` (direct)')
 
    vim.health.start('IME default')
    if h.ime_default_ok then
@@ -141,7 +141,7 @@ function M.check()
       health.error(string.format('%s : Not Available', opts.ime.default), 'Check the IME ID via `macime list --select-capable` or `macime get` command.')
    end
 
-   if opts.service.enabled then
+   if opts.socket.enabled then
       vim.health.start('Socket')
       if h.macimed_installed then
          if h.macimed_status == 'running' then
@@ -151,7 +151,7 @@ function M.check()
                health.info(string.format('macime_path : %s', h.macimed_macime_path))
             end
          elseif h.macimed_status == 'stopped' then
-            if opts.service.enabled then
+            if opts.socket.enabled then
                health.error(string.format('`macimed` : %s', h.macimed_status), {
                   '`macimed` is not started while `opts.service.enabled` is true.',
                   'Try: `brew services start macime` or `macimed`(for debugging)',

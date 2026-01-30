@@ -32,23 +32,26 @@ return {
 
 defaults:
 ```lua
----@type macime.Config
 local defaults = {
-   ttimeoutlen = nil, -- (number): If set, overwrite `vim.o.ttimeoutlen`. (Recommend: 0 - 50)
+   vim = {
+      ttimeoutlen = nil, -- (number): If set, overwrite `vim.o.ttimeoutlen`. (Recommend: 0 - 50)
+   },
    ime = {
       default = 'com.apple.keylayout.ABC', -- (string): The default IME ID (set in 'InsertLeave')
    },
    save = {
-      global = false, -- (bool): Save prev IME as globaly or per session_id
+      scope = "global", -- ("global"|"session"): Save previous IME per session or globally
    },
-   service = {
-      -- Ensure macime >= v3.0.1 installed and the service started
+   socket = {
+      -- Ensure `macime` >= v3.1.1 installed and `macimed` is running directly or via Homebrew service
       enabled = false, -- (bool): True to use launchd service for faster switching
-      sock_path = '/tmp/riodelphino.macimed.sock', -- (string): The sock path to listen (Usually no need to change)
+      path = '/tmp/riodelphino.macimed.sock', -- (string): The sock path to listen (Usually no need to change)
    },
-   pattern = nil, -- (string|[string]): Enabled file patterns (e.g. "*" or { "*.h", "*.c" } )
+   include = {
+      pattern = {"*"}, -- (string|[string]): Enable with specific file patterns (e.g. "*" or { "*.h", "*.c" } )
+   },
    exclude = {
-      filetype = {}, -- Exclude specific filetypes (e.g. { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' } )
+      filetype = {}, -- (string|[string]): Disable with specific filetypes (e.g. { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' } )
    },
 }
 ```
@@ -57,11 +60,13 @@ Recommended:
 ```lua
 ---@type macime.Config
 local defaults = {
-   ttimeoutlen = 0, -- Reduce delay after InsertLeave and InsertEnter
+   vim = {
+      ttimeoutlen = 0, -- Reduce delay after InsertLeave and InsertEnter
+   },
    save = {
       global = false, -- Save prevous IME per nvim pid
    },
-   service = {
+   socket = {
       enabled = true, -- Enable `macimed` launchd service for blazing faster switching
    },
    exclude = {

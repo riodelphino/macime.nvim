@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.2.0](https://github.com/riodelphino/macime.nvim/compare/v2.1.3...v2.2.0) (2026-01-31)
+
+* **feat!:** BREAKING CHANGE! Reconstruct option table
+
 ## [v2.1.3](https://github.com/riodelphino/macime.nvim/compare/v2.1.2...v2.1.3) (2026-01-31)
 
 * **refactor:** Move options to `config.lua`

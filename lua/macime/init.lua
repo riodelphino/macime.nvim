@@ -14,7 +14,7 @@ function M.send(args, cb)
 
    if type(args) == 'table' then args = table.concat(args, ' ') end
 
-   vim.uv.pipe_connect(pipe, conf.opts.service.sock_path, function(connect_err)
+   vim.uv.pipe_connect(pipe, conf.opts.socket.path, function(connect_err)
       if connect_err then
          local msg = string.format('Connect failed: %s\n\n%s', connect_err, msgs.pipe.connect_failed)
          vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
@@ -66,7 +66,7 @@ local function get_save_args()
    else
       args = { 'set', conf.opts.ime.default, '--save', '--session-id', get_session_id() }
    end
-   if conf.opts.service.enabled then table.insert(args, '--launchd') end
+   if conf.opts.socket.enabled then table.insert(args, '--launchd') end
    return args
 end
 
@@ -77,7 +77,7 @@ local function get_load_args()
    else
       args = { 'load', '--session-id', get_session_id() }
    end
-   if conf.opts.service.enabled then table.insert(args, '--launchd') end
+   if conf.opts.socket.enabled then table.insert(args, '--launchd') end
    return args
 end
 
@@ -93,13 +93,13 @@ local function add_autocmd()
 
    vim.api.nvim_create_autocmd('InsertLeave', {
       group = augroup,
-      pattern = conf.opts.pattern,
+      pattern = conf.opts.include.pattern,
       desc = 'macime.nvim - Save current IME & switch to the `default` IME',
       callback = function()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
          if buf_allowed then
             local args = get_save_args()
-            if conf.opts.service.enabled then
+            if conf.opts.socket.enabled then
                M.send(args) -- macimed service
             else
                vim.loop.spawn('macime', {
@@ -114,12 +114,12 @@ local function add_autocmd()
    vim.api.nvim_create_autocmd('InsertEnter', {
       group = augroup,
       desc = 'macime.nvim - Restore previous IME',
-      pattern = conf.opts.pattern,
+      pattern = conf.opts.include.pattern,
       callback = function()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
          if buf_allowed then
             local args = get_load_args()
-            if conf.opts.service.enabled then
+            if conf.opts.socket.enabled then
                M.send(args) -- macimed service
             else
                vim.loop.spawn('macime', {
@@ -137,7 +137,7 @@ end
 ---@param user_config macime.Config
 function M.setup(user_config)
    conf.opts = vim.tbl_deep_extend('force', conf.defaults, user_config)
-   if conf.opts.ttimeoutlen then vim.o.ttimeoutlen = conf.opts.ttimeoutlen end
+   if conf.opts.vim.ttimeoutlen then vim.o.ttimeoutlen = conf.opts.vim.ttimeoutlen end
    add_autocmd()
 end
 

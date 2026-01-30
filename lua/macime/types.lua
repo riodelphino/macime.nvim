@@ -1,23 +1,29 @@
 ---macime.Config
+---@class macime.Config.Vim
+---@field ttimeoutlen? number
+
 ---@class macime.Config.Save
 ---@field global? boolean
 
----@class macime.Config.Service
+---@class macime.Config.Socket
 ---@field enabled? boolean
----@field sock_path? string
+---@field path? string
 
 ---@class macime.Config.Ime
 ---@field default? string
+
+---@class macime.Config.Include
+---@field pattern? string|string[]
 
 ---@class macime.Config.Exclude
 ---@field filetype? string[]
 
 ---@class macime.Config
----@field ttimeoutlen? number
+---@field vim? macime.Config.Vim
 ---@field ime? macime.Config.Ime
 ---@field save? macime.Config.Save
----@field service? macime.Config.Service
----@field pattern? string|string[]
+---@field socket? macime.Config.Socket
+---@field include? macime.Config.Include
 ---@field exclude? macime.Config.Exclude
 
 ---macime.Health

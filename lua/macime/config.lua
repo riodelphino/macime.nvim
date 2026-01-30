@@ -2,18 +2,22 @@ local M = {}
 
 ---@type macime.Config
 M.defaults = {
-   ttimeoutlen = nil,
+   vim = {
+      ttimeoutlen = nil,
+   },
    ime = {
       default = 'com.apple.keylayout.ABC',
    },
    save = {
       global = false,
    },
-   service = {
+   socket = {
       enabled = false,
-      sock_path = '/tmp/riodelphino.macimed.sock',
+      path = '/tmp/riodelphino.macimed.sock',
    },
-   pattern = nil,
+   include = {
+      pattern = nil,
+   },
    exclude = {
       filetype = {},
    },
