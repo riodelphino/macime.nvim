@@ -5,7 +5,7 @@ local M = {}
 ---@return macime.Health health
 function M.get_health()
    local h = {} ---@type macime.Health
-   local opts = require('macime').opts
+   local opts = require('macime.config').opts
    local stdout
 
    -- Check macime installed and version
@@ -103,7 +103,7 @@ end
 
 function M.check()
    local h = M.get_health()
-   local opts = require('macime').opts
+   local opts = require('macime.config').opts
 
    vim.health.start('Command version')
    if h.macime_installed then
@@ -199,4 +199,5 @@ function M.check()
       end
    end
 end
+
 return M
