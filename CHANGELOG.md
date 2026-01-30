@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.1.2](https://github.com/riodelphino/macime.nvim/compare/v2.1.1...v2.1.2) (2026-01-30)
+
+* **chore:** Refine `:checkhealth` to get plist
+
 ## [v2.1.1](https://github.com/riodelphino/macime.nvim/compare/v2.1.0...v2.1.1) (2026-01-28)
 
 * **feat:** Add `:checkhealth`
