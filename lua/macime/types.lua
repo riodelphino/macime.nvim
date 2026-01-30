@@ -27,7 +27,7 @@
 ---@field macime_version? string
 ---@field macimed_installed? boolean
 ---@field macimed_version? string
----@field macimed_running? boolean
+---@field macimed_status? string
 ---@field macimed_sock_path? string
 ---@field macimed_macime_path? string
 ---@field capability_direct? boolean
