@@ -1,9 +1,14 @@
 # macime.nvim
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-%232196F3.svg?style=for-the-badge)](LICENSE)
+[![Lua](https://img.shields.io/badge/Lua-5.x-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)](https://www.lua.org/)
+[![Neovim](https://img.shields.io/badge/Neovim-0.9%2B-%2357A143.svg?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
+[![Dependency](https://img.shields.io/badge/Dependency-macime(Homebrew)-%23FBB040?style=for-the-badge)](#installation)
+[![Platform](https://img.shields.io/badge/Platform-macOS%2010.13%2B-blue?style=for-the-badge)](#)
 
 A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.  
 
-[macime](https://github.com/riodelphino/macime) cli is a blazing faster IME switcher for macOS.  
+[macime](https://github.com/riodelphino/macime) cli is a **blazing faster** IME switcher for macOS.  
 This plugin integrates [macime](https://github.com/riodelphino/macime) cli into nvim, without extra codings.
 
 
