@@ -3,6 +3,7 @@
 ---@field ttimeoutlen? number
 
 ---@class macime.Config.Save
+---@field enabled? boolean
 ---@field global? boolean
 
 ---@class macime.Config.Socket

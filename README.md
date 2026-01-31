@@ -44,6 +44,7 @@ local defaults = {
       default = 'com.apple.keylayout.ABC', -- (string): The default IME ID (set in 'InsertLeave')
    },
    save = {
+      enabled = true, -- (boolean): Enable/Disable save and restore previous IME
       scope = "global", -- ("global"|"session"): Save previous IME per session or globally
    },
    socket = {
@@ -68,6 +69,7 @@ local defaults = {
       ttimeoutlen = 0, -- Reduce delay after InsertLeave and InsertEnter
    },
    save = {
+      enabled = true,
       global = false, -- Save prevous IME per nvim pid
    },
    socket = {

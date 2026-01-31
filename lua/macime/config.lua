@@ -9,6 +9,7 @@ M.defaults = {
       default = 'com.apple.keylayout.ABC',
    },
    save = {
+      enabled = true,
       global = false,
    },
    socket = {

@@ -60,22 +60,30 @@ local function get_session_id()
 end
 
 ---@return table args
-local function get_save_args()
-   if conf.opts.save.global then
-      args = { 'set', conf.opts.ime.default, '--save' }
-   else
-      args = { 'set', conf.opts.ime.default, '--save', '--session-id', get_session_id() }
+local function get_leave_args()
+   if conf.opts.save.enabled then
+      if conf.opts.save.global then
+         args = { 'set', conf.opts.ime.default, '--save' }
+      else
+         args = { 'set', conf.opts.ime.default, '--save', '--session-id', get_session_id() }
+      end
+   else -- no save / no load
+      args = { 'set', conf.opts.ime.default }
    end
    if conf.opts.socket.enabled then table.insert(args, '--launchd') end
    return args
 end
 
 ---@return table args
-local function get_load_args()
-   if conf.opts.save.global then
-      args = { 'load' }
-   else
-      args = { 'load', '--session-id', get_session_id() }
+local function get_enter_args()
+   if conf.opts.save.enabled then
+      if conf.opts.save.global then
+         args = { 'load' }
+      else
+         args = { 'load', '--session-id', get_session_id() }
+      end
+   else -- no save / no load
+      args = {}
    end
    if conf.opts.socket.enabled then table.insert(args, '--launchd') end
    return args
@@ -98,7 +106,7 @@ local function add_autocmd()
       callback = function()
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
          if buf_allowed then
-            local args = get_save_args()
+            local args = get_leave_args()
             if conf.opts.socket.enabled then
                M.send(args) -- macimed service
             else
@@ -116,9 +124,12 @@ local function add_autocmd()
       desc = 'macime.nvim - Restore previous IME',
       pattern = conf.opts.include.pattern,
       callback = function()
+         if not conf.opts.save.enabled then
+            return -- Not set or load
+         end
          local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
          if buf_allowed then
-            local args = get_load_args()
+            local args = get_enter_args()
             if conf.opts.socket.enabled then
                M.send(args) -- macimed service
             else
