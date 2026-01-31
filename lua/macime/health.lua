@@ -46,7 +46,7 @@ function M.get_health()
       h.macimed_status = ok:match('^0') and 'running' or 'stopped'
    end
 
-   -- Check ime.default enaled
+   -- Check ime.default enabled
    stdout = vim.fn.system(string.format('macime list --select-capable | grep %s', opts.ime.default))
    if vim.trim(stdout) == opts.ime.default then h.ime_default_ok = true end
 
