@@ -2,6 +2,7 @@
 
 ## [v2.2.2](https://github.com/riodelphino/macime.nvim/compare/v2.2.0...v2.2.1) (2026-01-31)
 
+* **fix!:** BREAKING CHANGE! deprecae `macime` < 3.2.2 / Add `macime` version check in `setup()` / Check plist exists
 * **feat!:** BREAKING CHANGE! deprecate `macime` < 3.1.1
 * **docs:** typo
 

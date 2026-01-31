@@ -133,11 +133,25 @@ local function add_autocmd()
    })
 end
 
+function check_version()
+   local is_installed = (vim.fn.executable('macime') == 1)
+   if not is_installed then
+      local msg = '`macime` is not installed.\nSee `:checkhealth macime`'
+      error(msg)
+   end
+   local version = vim.trim(vim.fn.system({ 'macime', '--version' }))
+   if not vim.version.ge(version, '3.2.0') then
+      local msg = '`macime` version must be >= 3.2.0\nSee `:checkhealth macime`'
+      error(msg)
+   end
+end
+
 ---Setup
 ---@param user_config macime.Config
 function M.setup(user_config)
    conf.opts = vim.tbl_deep_extend('force', conf.defaults, user_config)
    if conf.opts.vim.ttimeoutlen then vim.o.ttimeoutlen = conf.opts.vim.ttimeoutlen end
+   check_version()
    add_autocmd()
 end
 

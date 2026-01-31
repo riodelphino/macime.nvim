@@ -12,12 +12,12 @@ A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.
 This plugin integrates [macime](https://github.com/riodelphino/macime) cli into nvim, without extra codings.
 
 > [!Caution]
-> `macime` < 3.1.1 is deprecated from `macime.nvim` v2.2.2
+> `macime` < 3.2.0 is deprecated from `macime.nvim` v2.2.2
 
 ## Dependencies
 
 - macOS >= 10.13
-- [macime](https://github.com/riodelphino/macime) >= 3.1.1
+- [macime](https://github.com/riodelphino/macime) >= 3.2.0
 - [nvim](https://neovim.io/) >= 0.9
 - swift >= 5.0 (Required for Homebrew build)
 

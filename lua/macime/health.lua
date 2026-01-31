@@ -12,13 +12,18 @@ function M.get_health()
    h.macime_installed = (vim.fn.executable('macime') == 1)
    if h.macime_installed then h.macime_version = vim.trim(vim.fn.system({ 'macime', '--version' })) end
 
+   if not vim.version.ge(h.macime_version, '3.2.0') then
+      -- Avoid UI freezing by `macimed --version` runs `macimed` as daemon
+      return h
+   end
+
    -- Check macimed installed and version
    h.macimed_installed = (vim.fn.executable('macimed') == 1)
    if h.macimed_installed then h.macimed_version = vim.trim(vim.fn.system({ 'macimed', '--version' })) end
 
    -- Check Capability
-   h.capability_direct = vim.version.ge(h.macime_version, '3.1.1')
-   h.capability_socket = vim.version.ge(h.macime_version, '3.1.1')
+   h.capability_direct = vim.version.ge(h.macime_version, '3.2.0')
+   h.capability_socket = vim.version.ge(h.macime_version, '3.2.0')
 
    -- Check Sock
    stdout = vim.fn.system({ 'macimed', '--info' })
@@ -64,7 +69,7 @@ function M.get_health()
 
       -- Check plist
       if h.service_file then
-         local plist = M.getpl(h.service_file)
+         local plist = M.get_plist(h.service_file)
          h.plist_keepalive = plist.keepalive
          h.plist_runatload = plist.runatload
          h.plist_cmd = plist.cmd
@@ -78,8 +83,9 @@ function M.get_health()
 end
 
 ---@param path string
-function M.getpl(path)
-   local plist = vim.fn.expand(path)
+function M.get_plist(path)
+   path = vim.fn.expand(path)
+   if not vim.uv.fs_stat(path) then return {} end
 
    -- plist -> json
    local json = vim.fn.system({
@@ -88,9 +94,10 @@ function M.getpl(path)
       'json',
       '-o',
       '-',
-      plist,
+      path,
    })
 
+   print('json: ' .. vim.inspect(json))
    local data = vim.json.decode(json)
 
    return {
@@ -110,12 +117,14 @@ function M.check()
    vim.health.start('Command version')
    if h.macime_installed then
       if h.capability_direct then
-         health.ok(string.format('`macime` : %s (>= 3.1.1)', h.macime_version))
+         health.ok(string.format('`macime` : %s (>= 3.2.0)', h.macime_version))
       else
-         health.error(string.format('`macime` : %s (>= 3.1.1)'), { 'Upgrade `macime` via: `brew update; brew upgrade macime`' })
+         health.error(string.format('`macime` : %s (>= 3.2.0)', h.macime_version), { 'Upgrade `macime` via: `brew update; brew upgrade macime`' })
+         return
       end
    else
       health.error('`macime` command not installed.', { 'Install `macime` via: `brew tap riodelphino/tap; brew install macime`' })
+      return
    end
    if not h.macimed_installed then -- Show only when `macimed` not found
       health.error(string.format('`macimed` not installed.'), { '`macimed` is bundled with `macime`.", "Try: `brew reinstall macime`' })
@@ -123,14 +132,14 @@ function M.check()
 
    vim.health.start('Capability')
    if h.capability_direct then
-      health.ok('`macime`  (direct) : Available (`macime` >= 3.1.1)')
+      health.ok('`macime`  (direct) : Available (`macime` >= 3.2.0)')
    else
-      health.error('`macime`  (direct) : Not Available', { 'Available for `macime` >= 3.1.1', 'Try: `brew update; brew upgrade macime' })
+      health.error('`macime`  (direct) : Not Available', { 'Available for `macime` >= 3.2.0', 'Try: `brew update; brew upgrade macime' })
    end
    if h.capability_socket then
-      health.ok('`macimed` (socket) : Available (`macime` >= 3.1.1)')
+      health.ok('`macimed` (socket) : Available (`macime` >= 3.2.0)')
    else
-      health.warn('`macimed` (socket) : Not Available', { 'Available for `macime` >= 3.1.1', 'Try: `brew update; brew upgrade macime' })
+      health.warn('`macimed` (socket) : Not Available', { 'Available for `macime` >= 3.2.0', 'Try: `brew update; brew upgrade macime' })
    end
 
    vim.health.start('Selected Backend')
