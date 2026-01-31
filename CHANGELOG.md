@@ -2,6 +2,7 @@
 
 ## [v2.2.3](https://github.com/riodelphino/macime.nvim/compare/v2.2.2...v2.2.3) (2026-01-31)
 
+* **docs:** Update `macime` version
 * **feat!:** BREAKING CHANGE! Change `opts.save.global` (boolean) -> `opts.save.scope` (string)
 * **feat:** Add `opts.save.enabled`
 

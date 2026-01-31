@@ -52,7 +52,7 @@ local defaults = {
       scope = "global", -- ("global"|"session"): Save previous IME per session or globally
    },
    socket = {
-      -- Ensure `macime` >= v3.1.1 installed and `macimed` is running directly or via Homebrew service
+      -- Ensure `macime` >= v3.2.0 installed and `macimed` is running directly or via Homebrew service
       enabled = false, -- (bool): True to use launchd service for faster switching
       path = '/tmp/riodelphino.macimed.sock', -- (string): The sock path to listen (Usually no need to change)
    },
@@ -86,7 +86,7 @@ local defaults = {
 ```
 
 With above recommended settings, ensure followings:
-* [macime](https://github.com/riodelphino/macime) >= 3.1.1 (`macimed` is also bundled)
+* [macime](https://github.com/riodelphino/macime) >= 3.2.0 (`macimed` is also bundled)
 * `macimed` is running manually or via `Homebrew service`
 
 See more details at: [riodelphino/macime](https://github.com/riodelphino/macime)
