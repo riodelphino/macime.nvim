@@ -11,16 +11,15 @@ A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.
 [macime](https://github.com/riodelphino/macime) cli is a **blazing faster** IME switcher for macOS.  
 This plugin integrates [macime](https://github.com/riodelphino/macime) cli into nvim, without extra codings.
 
+> [!Caution]
+> `macime` < 3.1.1 is deprecated from `macime.nvim` v2.2.2
 
 ## Dependencies
 
-- [macime](https://github.com/riodelphino/macime)
-
-| Version         | launchd | Speed | Note                 |
-| --------------- | :-----: | :---: | -------------------- |
-| macime >= 3.1.1 |    o    |   o   | Faster / Recommended |
-| macime >= 2.0.0 |    -    |   △   | Also works           |
-
+- macOS >= 10.13
+- [macime](https://github.com/riodelphino/macime) >= 3.1.1
+- [nvim](https://neovim.io/) >= 0.9
+- swift >= 5.0 (Required for Homebrew build)
 
 ## Install
 
@@ -80,10 +79,9 @@ local defaults = {
 }
 ```
 
-**- macimed -**
 With above recommended settings, ensure followings:
-* [macime](https://github.com/riodelphino/macime) >= 3.0.1 is installed (`macimed` is bundled)
-* `macimed` is enabled via launchd service
+* [macime](https://github.com/riodelphino/macime) >= 3.1.1 (`macimed` is also bundled)
+* `macimed` is running manually or via `Homebrew service`
 
 See more details at: [riodelphino/macime](https://github.com/riodelphino/macime)
 

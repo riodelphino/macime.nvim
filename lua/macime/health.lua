@@ -17,7 +17,7 @@ function M.get_health()
    if h.macimed_installed then h.macimed_version = vim.trim(vim.fn.system({ 'macimed', '--version' })) end
 
    -- Check Capability
-   h.capability_direct = vim.version.ge(h.macime_version, '2.0.0')
+   h.capability_direct = vim.version.ge(h.macime_version, '3.1.1')
    h.capability_socket = vim.version.ge(h.macime_version, '3.1.1')
 
    -- Check Sock
@@ -50,26 +50,28 @@ function M.get_health()
    stdout = vim.fn.system(string.format('macime list --select-capable | grep %s', opts.ime.default))
    if vim.trim(stdout) == opts.ime.default then h.ime_default_ok = true end
 
-   -- Check Homebrew Service Info
-   stdout = vim.fn.system('brew services list | grep macime')
-   local fields = vim.split(vim.trim(stdout), '%s+')
-   if fields then
-      local name, status, user, file = unpack(fields)
-      h.service_name = name
-      h.service_status = status
-      h.service_user = user
-      h.service_file = file
-   end
+   if opts.socket.enabled then -- Check only when `socket.enabled` is true
+      -- Check Homebrew Service Info
+      stdout = vim.fn.system('brew services list | grep macime')
+      local fields = vim.split(vim.trim(stdout), '%s+')
+      if fields then
+         local name, status, user, file = unpack(fields)
+         h.service_name = name
+         h.service_status = status
+         h.service_user = user
+         h.service_file = file
+      end
 
-   -- Check plist
-   if h.service_file then
-      local plist = M.getpl(h.service_file)
-      h.plist_keepalive = plist.keepalive
-      h.plist_runatload = plist.runatload
-      h.plist_cmd = plist.cmd
-      h.plist_macime = plist.macime
-      h.plist_stderr = plist.stderr
-      h.plist_stdlog = plist.stdout
+      -- Check plist
+      if h.service_file then
+         local plist = M.getpl(h.service_file)
+         h.plist_keepalive = plist.keepalive
+         h.plist_runatload = plist.runatload
+         h.plist_cmd = plist.cmd
+         h.plist_macime = plist.macime
+         h.plist_stderr = plist.stderr
+         h.plist_stdlog = plist.stdout
+      end
    end
 
    return h
@@ -108,9 +110,9 @@ function M.check()
    vim.health.start('Command version')
    if h.macime_installed then
       if h.capability_direct then
-         health.ok(string.format('`macime` : %s (>= 2.0.0)', h.macime_version))
+         health.ok(string.format('`macime` : %s (>= 3.1.1)', h.macime_version))
       else
-         health.error(string.format('`macime` : %s (>= 2.0.0)'), { 'Upgrade `macime` via: `brew update; brew upgrade macime`' })
+         health.error(string.format('`macime` : %s (>= 3.1.1)'), { 'Upgrade `macime` via: `brew update; brew upgrade macime`' })
       end
    else
       health.error('`macime` command not installed.', { 'Install `macime` via: `brew tap riodelphino/tap; brew install macime`' })
@@ -121,9 +123,9 @@ function M.check()
 
    vim.health.start('Capability')
    if h.capability_direct then
-      health.ok('`macime`  (direct) : Available (`macime` >= 2.0.0)')
+      health.ok('`macime`  (direct) : Available (`macime` >= 3.1.1)')
    else
-      health.error('`macime`  (direct) : Not Available', { 'Available for `macime` >= 2.0.0', 'Try: `brew update; brew upgrade macime' })
+      health.error('`macime`  (direct) : Not Available', { 'Available for `macime` >= 3.1.1', 'Try: `brew update; brew upgrade macime' })
    end
    if h.capability_socket then
       health.ok('`macimed` (socket) : Available (`macime` >= 3.1.1)')
