@@ -11,12 +11,6 @@ A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.
 [macime](https://github.com/riodelphino/macime) cli is a **blazing faster** IME switcher for macOS.  
 This plugin integrates [macime](https://github.com/riodelphino/macime) cli into nvim, without extra codings.
 
-> [!Caution]
-> `macime` < 3.2.0 is deprecated from `macime.nvim` v2.2.2
-
-> [!Caution]
-> Config structure was modified in `macime.nvim` v2.2.2 and v2.2.3 
-
 
 ## Dependencies
 
@@ -24,6 +18,14 @@ This plugin integrates [macime](https://github.com/riodelphino/macime) cli into 
 - [macime](https://github.com/riodelphino/macime) >= 3.2.0
 - [nvim](https://neovim.io/) >= 0.9
 - swift >= 5.0 (Required for Homebrew build)
+
+
+## Breaking Changes
+
+[v2.2.3](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.3): Config structure was changed
+[v2.2.2](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.2): Config structure was changed
+[v2.2.2](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.2): `macime` < v3.2.0 is deprecated
+
 
 ## Install
 

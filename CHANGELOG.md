@@ -2,6 +2,7 @@
 
 ## [v2.2.4](https://github.com/riodelphino/macime.nvim/compare/v2.2.3...v2.2.4) (2026-01-31)
 
+* **docs:** Refine `Breaking Changes`
 * **refactor:** Change type definition of `opts.save.scope`
 
 ## [v2.2.3](https://github.com/riodelphino/macime.nvim/compare/v2.2.2...v2.2.3) (2026-01-31)
