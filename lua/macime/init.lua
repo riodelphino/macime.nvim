@@ -62,12 +62,12 @@ end
 ---@return table args
 local function get_leave_args()
    if conf.opts.save.enabled then
-      if conf.opts.save.global then
+      if conf.opts.save.scope == 'global' then
          args = { 'set', conf.opts.ime.default, '--save' }
-      else
+      elseif conf.opts.save.scope == 'session' then
          args = { 'set', conf.opts.ime.default, '--save', '--session-id', get_session_id() }
       end
-   else -- no save / no load
+   else
       args = { 'set', conf.opts.ime.default }
    end
    if conf.opts.socket.enabled then table.insert(args, '--launchd') end
@@ -77,9 +77,9 @@ end
 ---@return table args
 local function get_enter_args()
    if conf.opts.save.enabled then
-      if conf.opts.save.global then
+      if conf.opts.save.scope == 'global' then
          args = { 'load' }
-      else
+      elseif conf.opts.save.scope == 'session' then
          args = { 'load', '--session-id', get_session_id() }
       end
    else -- no save / no load

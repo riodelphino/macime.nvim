@@ -10,7 +10,7 @@ M.defaults = {
    },
    save = {
       enabled = true,
-      global = false,
+      scope = 'session',
    },
    socket = {
       enabled = false,

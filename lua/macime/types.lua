@@ -4,7 +4,7 @@
 
 ---@class macime.Config.Save
 ---@field enabled? boolean
----@field global? boolean
+---@field scope? string
 
 ---@class macime.Config.Socket
 ---@field enabled? boolean

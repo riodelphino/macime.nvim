@@ -14,6 +14,10 @@ This plugin integrates [macime](https://github.com/riodelphino/macime) cli into 
 > [!Caution]
 > `macime` < 3.2.0 is deprecated from `macime.nvim` v2.2.2
 
+> [!Caution]
+> Config structure was modified in `macime.nvim` v2.2.2 and v2.2.3 
+
+
 ## Dependencies
 
 - macOS >= 10.13
@@ -70,7 +74,7 @@ local defaults = {
    },
    save = {
       enabled = true,
-      global = false, -- Save prevous IME per nvim pid
+      scope = "session", -- Save prevous IME per nvim pid
    },
    socket = {
       enabled = true, -- Enable `macimed` launchd service for blazing faster switching
