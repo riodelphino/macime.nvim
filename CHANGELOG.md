@@ -2,6 +2,7 @@
 
 ## [v2.2.5](https://github.com/riodelphino/macime.nvim/compare/v2.2.4...v2.2.5) (2026-02-01)
 
+* **docs:** Refine sample config / typo
 * **refactor:** Strict h.plist type
 * **refactor:** Simplify checking if buf excluded
 * **refactor:** Refine checkhealth plist output (Use `vim.inspect()` instead)

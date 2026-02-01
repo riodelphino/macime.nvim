@@ -40,7 +40,7 @@ return {
 
 ## Config
 
-defaults:
+Default config:
 ```lua
 local defaults = {
    vim = {
@@ -67,23 +67,27 @@ local defaults = {
 }
 ```
 
-Recommended:
+Recommended setup:
 ```lua
----@type macime.Config
-local defaults = {
-   vim = {
-      ttimeoutlen = 0, -- Reduce delay after InsertLeave and InsertEnter
-   },
-   save = {
-      enabled = true,
-      scope = "session", -- Save prevous IME per nvim pid
-   },
-   socket = {
-      enabled = true, -- Enable `macimed` launchd service for blazing faster switching
-   },
-   exclude = {
-      filetype = { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, -- Exclude specific filetypes
-   },
+{
+   "riodelphino/macime.nvim",
+   event = 'VimEnter',
+   ---@type macime.Config
+   opts = {
+      vim = {
+         ttimeoutlen = 0, -- Reduce delay after InsertLeave and InsertEnter
+      },
+      save = {
+         enabled = true,
+         scope = "session", -- Save previous IME per nvim pid
+      },
+      socket = {
+         enabled = true, -- Enable `macimed` launchd service for blazing faster switching
+      },
+      exclude = {
+         filetype = { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, -- Exclude specific filetypes
+      },
+   }
 }
 ```
 
