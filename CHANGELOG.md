@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.2.5](https://github.com/riodelphino/macime.nvim/compare/v2.2.4...v2.2.5) (2026-02-01)
+
+* **refactor:** Refine checkhealth plist output (Use `vim.inspect()` instead)
+
 ## [v2.2.4](https://github.com/riodelphino/macime.nvim/compare/v2.2.3...v2.2.4) (2026-01-31)
 
 * **docs:** Refine `Breaking Changes`

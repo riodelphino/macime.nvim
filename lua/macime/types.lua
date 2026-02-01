@@ -43,9 +43,4 @@
 ---@field service_status? string
 ---@field service_user? string
 ---@field service_file? string
----@field plist_keepalive? boolean
----@field plist_runatload? boolean
----@field plist_macime? string
----@field plist_cmd? string
----@field plist_stderr? string
----@field plist_stdlog? string
+---@field plist? table

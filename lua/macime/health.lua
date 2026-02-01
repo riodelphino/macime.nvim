@@ -68,22 +68,14 @@ function M.get_health()
       end
 
       -- Check plist
-      if h.service_file then
-         local plist = M.get_plist(h.service_file)
-         h.plist_keepalive = plist.keepalive
-         h.plist_runatload = plist.runatload
-         h.plist_cmd = plist.cmd
-         h.plist_macime = plist.macime
-         h.plist_stderr = plist.stderr
-         h.plist_stdlog = plist.stdout
-      end
+      if h.service_file then h.plist = M.parse_plist(h.service_file) end
    end
 
    return h
 end
 
 ---@param path string
-function M.get_plist(path)
+function M.parse_plist(path)
    path = vim.fn.expand(path)
    if not vim.uv.fs_stat(path) then return {} end
 
@@ -97,17 +89,7 @@ function M.get_plist(path)
       path,
    })
 
-   print('json: ' .. vim.inspect(json))
-   local data = vim.json.decode(json)
-
-   return {
-      macime = data.EnvironmentVariables.MACIME_PATH,
-      keepalive = data.KeepAlive,
-      runatload = data.RunAtLoad,
-      cmd = data.ProgramArguments and table.concat(data.ProgramArguments, ' ') or nil,
-      stderr = data.StandardErrorPath,
-      stdout = data.StandardOutPath,
-   }
+   return vim.json.decode(json)
 end
 
 function M.check()
@@ -195,12 +177,8 @@ function M.check()
       vim.health.start('plist')
       if h.service_status == 'started' then
          health.ok('plist exists')
-         health.info(string.format('KeepAlive            : %s', h.plist_keepalive))
-         health.info(string.format('RunAtLoad            : %s', h.plist_runatload))
-         health.info(string.format('macime (MACIME_PATH) : %s', h.plist_macime))
-         health.info(string.format('ProgramArguments     : %s', h.plist_cmd))
-         health.info(string.format('StandardErrorPath    : %s', h.plist_stderr))
-         health.info(string.format('StandardOutPath      : %s', h.plist_stdlog))
+         health.info('path    : ' .. h.service_file)
+         health.info('content :\n' .. vim.inspect(h.plist))
       elseif h.service_status == 'none' then
          if h.macimed_status then
             health.warn('plist: Not found')
