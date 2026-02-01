@@ -89,13 +89,6 @@ local function get_enter_args()
    return args
 end
 
----@param filetype string
----@return boolean allowed
-local function is_excluded_filetype(filetype)
-   local is_excluded = vim.tbl_contains(conf.opts.exclude.filetype, filetype)
-   return is_excluded
-end
-
 local function add_autocmd()
    local augroup = vim.api.nvim_create_augroup('MacIME', {})
 
@@ -104,18 +97,17 @@ local function add_autocmd()
       pattern = conf.opts.include.pattern,
       desc = 'macime.nvim - Save current IME & switch to the `default` IME',
       callback = function()
-         local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
-         if buf_allowed then
-            local args = get_leave_args()
-            if conf.opts.socket.enabled then
-               M.send(args) -- macimed service
-            else
-               vim.loop.spawn('macime', {
-                  args = args,
-                  stdio = { nil, nil, nil },
-                  detach = true,
-               })
-            end
+         local is_excluded = vim.tbl_contains(conf.opts.exclude.filetype, vim.bo.filetype)
+         if is_excluded then return end
+         local args = get_leave_args()
+         if conf.opts.socket.enabled then
+            M.send(args) -- macimed service
+         else
+            vim.loop.spawn('macime', {
+               args = args,
+               stdio = { nil, nil, nil },
+               detach = true,
+            })
          end
       end,
    })
@@ -124,21 +116,18 @@ local function add_autocmd()
       desc = 'macime.nvim - Restore previous IME',
       pattern = conf.opts.include.pattern,
       callback = function()
-         if not conf.opts.save.enabled then
-            return -- Not set or load
-         end
-         local buf_allowed = not is_excluded_filetype(vim.bo.filetype)
-         if buf_allowed then
-            local args = get_enter_args()
-            if conf.opts.socket.enabled then
-               M.send(args) -- macimed service
-            else
-               vim.loop.spawn('macime', {
-                  args = args,
-                  stdio = { nil, nil, nil },
-                  detach = true,
-               })
-            end
+         if not conf.opts.save.enabled then return end -- Not set or load
+         local is_excluded = vim.tbl_contains(conf.opts.exclude.filetype, vim.bo.filetype)
+         if is_excluded then return end
+         local args = get_enter_args()
+         if conf.opts.socket.enabled then
+            M.send(args) -- macimed service
+         else
+            vim.loop.spawn('macime', {
+               args = args,
+               stdio = { nil, nil, nil },
+               detach = true,
+            })
          end
       end,
    })
