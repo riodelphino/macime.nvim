@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## [v2.2.5](https://github.com/riodelphino/macime.nvim/compare/v2.2.4...v2.2.5) (2026-02-01)
+## [v2.2.5](https://github.com/riodelphino/macime.nvim/compare/v2.2.4...v2.2.5) (2026-02-02)
 
 * **docs:** Refine sample config / typo
 * **refactor:** Strict h.plist type
