@@ -12,6 +12,7 @@
 
 ---@class macime.Config.Ime
 ---@field default? string
+---@field cjk_refresh? boolean
 
 ---@class macime.Config.Include
 ---@field pattern? string|string[]

@@ -22,6 +22,7 @@ This plugin integrates [macime](https://github.com/riodelphino/macime) cli into 
 
 ## Breaking Changes
 
+[v2.3.0](https://github.com/riodelphino/macime.nvim/releases/tag/v2.3.0): Adapt to `--cjk-refersh` option in `macime` v3.5.0
 [v2.2.3](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.3): Config structure was changed
 [v2.2.2](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.2): Config structure was changed
 [v2.2.2](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.2): `macime` < v3.2.0 is deprecated
@@ -48,6 +49,7 @@ local defaults = {
    },
    ime = {
       default = 'com.apple.keylayout.ABC', -- (string): The default IME ID (set in 'InsertLeave')
+      cjk_refresh = false, -- (boolean): Enable/Disable IME refreshing for CJK input methods (Experimental)
    },
    save = {
       enabled = true, -- (boolean): Enable/Disable save and restore previous IME

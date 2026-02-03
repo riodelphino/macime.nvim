@@ -70,6 +70,7 @@ local function get_leave_args()
    else
       args = { 'set', conf.opts.ime.default }
    end
+   if conf.opts.ime.cjk_refresh then table.insert(args, '--cjk-refresh ') end
    if conf.opts.socket.enabled then table.insert(args, '--launchd') end
    return args
 end
@@ -85,6 +86,7 @@ local function get_enter_args()
    else -- no save / no load
       args = {}
    end
+   if conf.opts.ime.cjk_refresh then table.insert(args, '--cjk-refresh ') end
    if conf.opts.socket.enabled then table.insert(args, '--launchd') end
    return args
 end

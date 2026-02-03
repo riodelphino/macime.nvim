@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.3.0](https://github.com/riodelphino/macime.nvim/compare/v2.2.5...v2.3.0) (2026-02-04)
+
+* **feat!:** Adapt to `macime` v3.5.0 (Add `--cjk-refresh` option)
+
 ## [v2.2.5](https://github.com/riodelphino/macime.nvim/compare/v2.2.4...v2.2.5) (2026-02-02)
 
 * **docs:** Refine sample config / typo
