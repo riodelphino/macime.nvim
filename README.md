@@ -114,7 +114,6 @@ It shows diagnostic information and gives useful advices about:
 - IME default
 - Socket
 - Homebrew Service
-- plist
 
 
 ## Issues

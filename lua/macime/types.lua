@@ -45,4 +45,3 @@
 ---@field service_status? string
 ---@field service_user? string
 ---@field service_file? string
----@field plist? table<string, any>
