@@ -47,4 +47,5 @@
 ---@field service_file? string
 ---@field service_out? string
 ---@field service_err? string
+---@field service_daemon? string
 ---@field plist? table<string, any>

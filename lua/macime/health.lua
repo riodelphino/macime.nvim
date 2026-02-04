@@ -73,6 +73,8 @@ function M.get_health()
          plist = M.parse_plist(h.service_file)
          h.service_out = plist.StandardOutPath
          h.service_err = plist.StandardErrorPath
+         local daemons = plist.ProgramArguments
+         h.service_daemon = #daemons == 1 and daemons[1] or vim.inspect(daemons)
       end
    end
 
@@ -175,8 +177,9 @@ function M.check()
             health.info(string.format('status : %s', h.service_status))
             health.info(string.format('user   : %s', h.service_user))
             health.info(string.format('file   : %s', h.service_file))
-            health.info(string.format('out    : %s', h.service_out))
-            health.info(string.format('err    : %s', h.service_err))
+            health.info(string.format('stdout : %s', h.service_out))
+            health.info(string.format('stderr : %s', h.service_err))
+            health.info(string.format('daemon : %s', h.service_daemon))
          elseif h.service_status == 'none' then
             if h.macimed_status == 'running' then
                health.warn('Service not started', { 'Try: `brew services start macime`', 'Or : set `opts.service.enabled` to false' })
