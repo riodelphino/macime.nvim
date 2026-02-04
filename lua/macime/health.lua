@@ -67,9 +67,30 @@ function M.get_health()
          h.service_user = user
          h.service_file = file
       end
+
+      -- Check plist
+      if h.service_file then h.plist = M.parse_plist(h.service_file) end
    end
 
    return h
+end
+
+---@param path string
+function M.parse_plist(path)
+   path = vim.fn.expand(path)
+   if not vim.uv.fs_stat(path) then return {} end
+
+   -- plist -> json
+   local json = vim.fn.system({
+      'plutil',
+      '-convert',
+      'json',
+      '-o',
+      '-',
+      path,
+   })
+
+   return vim.json.decode(json)
 end
 
 function M.check()
@@ -156,6 +177,19 @@ function M.check()
             else
                health.error('Service not started', { 'Try: `brew services start macime`', 'Or : set `opts.service.enabled` to false' })
             end
+         end
+      end
+
+      vim.health.start('plist')
+      if h.service_status == 'started' then
+         health.ok('plist exists')
+         health.info('path    : ' .. h.service_file)
+         health.info('content :\n' .. vim.inspect(h.plist))
+      elseif h.service_status == 'none' then
+         if h.macimed_status then
+            health.warn('plist: Not found')
+         else
+            health.error('plist: Not found')
          end
       end
    end
