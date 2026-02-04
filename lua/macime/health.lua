@@ -24,6 +24,7 @@ function M.get_health()
    -- Check Capability
    h.capability_direct = vim.version.ge(h.macime_version, '3.2.0')
    h.capability_socket = vim.version.ge(h.macime_version, '3.2.0')
+   h.capability_cjk_refresh = vim.version.ge(h.macime_version, '3.5.0')
 
    -- Check Sock
    stdout = vim.fn.system({ 'macimed', '--info' })
@@ -122,6 +123,11 @@ function M.check()
       health.ok('`macimed` (socket) : Available (`macime` >= 3.2.0)')
    else
       health.warn('`macimed` (socket) : Not Available', { 'Available for `macime` >= 3.2.0', 'Try: `brew update; brew upgrade macime' })
+   end
+   if h.capability_cjk_refresh then
+      health.ok('cjk_refresh : Available (`macime` >= 3.5.0)')
+   else
+      health.warn('cjk_refresh : Not Available', { 'Available for `macime` >= 3.5.0', 'Try: `brew update; brew upgrade macime' })
    end
 
    vim.health.start('Selected Backend')

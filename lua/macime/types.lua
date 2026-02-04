@@ -40,6 +40,7 @@
 ---@field macimed_macime_path? string
 ---@field capability_direct? boolean
 ---@field capability_socket? boolean
+---@field capability_cjk_refresh? boolean
 ---@field service_name? string
 ---@field service_status? string
 ---@field service_user? string
