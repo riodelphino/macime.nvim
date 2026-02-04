@@ -2,6 +2,7 @@
 
 ## [v2.3.1](https://github.com/riodelphino/macime.nvim/compare/v2.3.0...v2.3.1) (2026-02-04)
 
+* **docs:** Reduce `plist` information and move out/err to `Homebrew Service` in checkhealth
 * **docs:** Add `cjk_refresh` to checkhealth
 
 ## [v2.3.0](https://github.com/riodelphino/macime.nvim/compare/v2.2.5...v2.3.0) (2026-02-04)

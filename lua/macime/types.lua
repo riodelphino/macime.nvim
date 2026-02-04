@@ -45,4 +45,6 @@
 ---@field service_status? string
 ---@field service_user? string
 ---@field service_file? string
+---@field service_out? string
+---@field service_err? string
 ---@field plist? table<string, any>
