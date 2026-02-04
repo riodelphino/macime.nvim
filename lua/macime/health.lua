@@ -141,9 +141,9 @@ function M.check()
 
    vim.health.start('IME default')
    if h.ime_default_ok then
-      health.ok(string.format('%s : Available', opts.ime.default))
+      health.ok(string.format('%s : Valid', opts.ime.default))
    else
-      health.error(string.format('%s : Not Available', opts.ime.default), 'Check the IME ID via `macime list --select-capable` or `macime get` command.')
+      health.error(string.format('%s : Invalid', opts.ime.default), 'Get the valid IME ID via `macime list --select-capable` or `macime get` command.')
    end
 
    if opts.socket.enabled then
@@ -152,7 +152,7 @@ function M.check()
          if h.macimed_status == 'running' then
             health.ok(string.format('`macimed` : %s', h.macimed_status))
             if h.macimed_sock_path or h.macimed_macime_path then -- `macimed --info` is available for `macimed` >= v3.3.0
-               health.info(string.format('sock_path   : %s (Fixed value)', h.macimed_sock_path))
+               health.info(string.format('sock_path   : %s', h.macimed_sock_path))
                health.info(string.format('macime_path : %s', h.macimed_macime_path))
             end
          elseif h.macimed_status == 'stopped' then
