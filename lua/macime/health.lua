@@ -6,11 +6,14 @@ local M = {}
 function M.get_health()
    local h = {} ---@type macime.Health
    local opts = require('macime.config').opts
+   local ctx = require('macime.context').ctx
    local stdout
 
+   require('macime.context').create_context() -- refresh context
+
    -- Check macime installed and version
-   h.macime_installed = (vim.fn.executable('macime') == 1)
-   if h.macime_installed then h.macime_version = vim.trim(vim.fn.system({ 'macime', '--version' })) end
+   h.macime_installed = ctx.macime.installed
+   if h.macime_installed then h.macime_version = ctx.macime.version end
 
    if not vim.version.ge(h.macime_version, '3.2.0') then
       -- Avoid UI freezing by `macimed --version` runs `macimed` as daemon
@@ -18,38 +21,57 @@ function M.get_health()
    end
 
    -- Check macimed installed and version
-   h.macimed_installed = (vim.fn.executable('macimed') == 1)
-   if h.macimed_installed then h.macimed_version = vim.trim(vim.fn.system({ 'macimed', '--version' })) end
+   h.macimed_installed = ctx.macimed.installed
+   if h.macimed_installed then h.macimed_version = ctx.macimed.version end
 
    -- Check Capability
-   h.capability_direct = vim.version.ge(h.macime_version, '3.2.0')
-   h.capability_socket = vim.version.ge(h.macime_version, '3.2.0')
-   h.capability_cjk_refresh = vim.version.ge(h.macime_version, '3.5.0')
+   h.capability_direct = ctx.capability.macime_direct
+   h.capability_daemon = ctx.capability.macimed_daemon
+   h.capability_cjk_refresh = ctx.capability.cjk_refresh
+   h.capability_daemon_socket_api = ctx.capability.daemon_socket_api
 
-   -- Check Sock
-   stdout = vim.fn.system({ 'macimed', '--info' })
-   for _, line in ipairs(vim.fn.split(stdout, '\n', false)) do
-      local k, v = unpack(vim.fn.split(line, ':', false))
-      k, v = vim.trim(k), vim.trim(v)
-      k, v = k:gsub('\n', ''), v:gsub('\n', '')
-      if k and v then
-         if k == 'sockPath' then
-            h.macimed_sock_path = v
-         elseif k == 'status' then
-            h.macimed_status = v
-         elseif k == 'macimePath' then
-            h.macimed_macime_path = v
+   -- Check Socket
+   h.macimed_status, h.macimed_sock_path, h.macimed_macime_path = '', '', ''
+   if ctx.capability.daemon_socket_api then
+      -- For `macime` >= v3.6.0
+      local pipe = vim.uv.new_pipe(false)
+      vim.uv.pipe_connect(pipe, opts.socket.path, function(connect_err)
+         if not connect_err then
+            h.macimed_status = 'running'
+            require('macime').send('daemon info', function(ok, data) -- TODO: [UNSTABLE] Finishing this cb before exiting `get_health()` is not ensured.
+               if ok then
+                  local info = vim.json.decode(data)
+                  if info then
+                     h.macimed_sock_path = info['sock-path']
+                     h.macimed_macime_path = info['macime-path']
+                  end
+               else
+                  -- TODO: Add error handling
+                  h.macimed_sock_path = 'ERROR: Cannot get sock-path'
+                  h.macimed_macime_path = 'ERROR: Cannot get macime-path'
+               end
+            end)
+         else
+            h.macimed_status = 'stopped'
+         end
+      end)
+   else
+      -- For `macime` < v3.6.0 (backward compatibility) -- TODO: Must be removed in later version
+      local macimed_info = vim.fn.system({ 'macimed', '--info' })
+      for _, line in ipairs(vim.fn.split(macimed_info, '\n', false)) do
+         local k, v = unpack(vim.fn.split(line, ':', false))
+         k, v = vim.trim(k), vim.trim(v)
+         k, v = k:gsub('\n', ''), v:gsub('\n', '')
+         if k and v then
+            if k == 'status' then
+               h.macimed_status = v
+            elseif k == 'sock-path' then
+               h.macimed_sock_path = v .. ' (Note: `MACIME_SOCK_PATH` is not reflected)'
+            elseif k == 'macime-path' then
+               h.macimed_macime_path = v .. ' (Note: `MACIME_PATH` is not reflected)'
+            end
          end
       end
-   end
-   -- (Fallback) Check macimed status in older macime,macimed
-   if vim.version.lt(h.macime_version, '3.3.1') then -- if macime, macimed < 3.3.1 (`status` is implemented in 3.3.1)
-      local ok = vim.fn.system({
-         'sh',
-         '-c',
-         string.format('nc -U %q < /dev/null >/dev/null 2>&1; echo $?', opts.socket.path),
-      })
-      h.macimed_status = ok:match('^0') and 'running' or 'stopped'
    end
 
    -- Check ime.default enabled
@@ -116,7 +138,10 @@ function M.check()
       return
    end
    if not h.macimed_installed then -- Show only when `macimed` not found
-      health.error(string.format('`macimed` not installed.'), { '`macimed` is bundled with `macime`.", "Try: `brew reinstall macime`' })
+      health.error('`macimed` not installed.', { '`macimed` is bundled with `macime`.', 'Try: `brew reinstall macime`' })
+   end
+   if h.macimed_version ~= h.macime_version then -- Show only when version mismatch
+      health.error(string.format('Version mismatch: `macime` %s / `macimed` %s', h.macime_version, h.macimed_version), { 'Try: `brew reinstall macime`' })
    end
 
    vim.health.start('Capability')
@@ -125,7 +150,7 @@ function M.check()
    else
       health.error('`macime`  (direct) : Not Available', { 'Available for `macime` >= 3.2.0', 'Try: `brew update; brew upgrade macime' })
    end
-   if h.capability_socket then
+   if h.capability_daemon then
       health.ok('`macimed` (socket) : Available (`macime` >= 3.2.0)')
    else
       health.warn('`macimed` (socket) : Not Available', { 'Available for `macime` >= 3.2.0', 'Try: `brew update; brew upgrade macime' })
@@ -152,8 +177,8 @@ function M.check()
          if h.macimed_status == 'running' then
             health.ok(string.format('`macimed` : %s', h.macimed_status))
             if h.macimed_sock_path or h.macimed_macime_path then -- `macimed --info` is available for `macimed` >= v3.3.0
-               health.info(string.format('sock_path   : %s', h.macimed_sock_path))
-               health.info(string.format('macime_path : %s', h.macimed_macime_path))
+               health.info(string.format('sock-path   : %s', h.macimed_sock_path))
+               health.info(string.format('macime-path : %s', h.macimed_macime_path))
             end
          elseif h.macimed_status == 'stopped' then
             if opts.socket.enabled then

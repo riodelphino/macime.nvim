@@ -147,6 +147,87 @@ Solutions:
    - Or, open another app window (e.g. `Safari.app`), then return to terminal. `right_command` key works again.
 
 
+## API
+
+### Send command and recieve message
+
+If `macimed` is running, it is controled by sending command via `send()` API function.
+
+Send comamnd -> Evaluate return values via callback:
+```lua
+require('macime').send("<method> <subcmd> [args...]", function(ok, data)
+   if not ok then
+      -- Error operations
+   end
+   -- Success operations
+end)
+```
+
+Or, simply send command without return values:
+```lua
+require('macime').send("<method> <subcmd> [args...]")
+```
+
+The command also accepts table:
+```lua
+require('macime').send({"<method>", "<subcmd>", "<arg>", "<arg>", ...})
+```
+
+#### Method: ime
+
+`ime` is a wrapper method to control `macime` command via `macimed`.  
+The syntax is same with `macime` command line args. Just insert `ime` at the beginning.
+
+The 
+```lua
+-- Equals to `macime get`
+require('macime').send("ime get")
+
+-- Equals to `macime set com.apple.keylayout.ABC`
+require('macime').send("ime set com.apple.keylayout.ABC")
+
+-- Equals to `macime set com.apple.keylayout.ABC --save`
+require('macime').send("ime set com.apple.keylayout.ABC --save")
+
+-- Equals to `macime set com.apple.keylayout.ABC --save --session-id nvim-1001`
+require('macime').send("ime set com.apple.keylayout.ABC --save --session-id nvim-1001")
+
+require('macime').send("ime load") -- Equals to `macime load`
+require('macime').send("ime load") -- Equals to `macime load`
+```
+
+#### Method: daemon
+
+`daemon` is a wrapper method to control `macimed`.  
+Insert `daemon` at the beginning, then add sub command.
+
+```lua
+-- Get status
+require('macime').send("daemon status", function(ok, data)
+   if ok then
+      print("status: " .. data)
+   end
+)
+-- "running"
+
+-- Get all information
+require('macime').send("daemon info")
+
+-- Get sock path
+require('macime').send("daemon get sock-path", function(ok, data)
+   if ok then
+      print("sock-path: " .. data)
+   end
+end)
+
+-- Get macime path
+require('macime').send("daemon get macime-path", function(ok, data)
+   if ok then
+      print("macime-path: " .. data)
+   end
+end)
+```
+
 ## TODO
 
 ### Save & Load

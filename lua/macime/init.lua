@@ -6,6 +6,15 @@ local M = {}
 
 ---@type macime.Config
 
+-- ---Return pipe is connected
+-- ---@return boolean isConnected
+-- function M.isConnected()
+--    local pipe = vim.uv.new_pipe(false)
+--    vim.uv.pipe_connect(pipe, opts.socket.path, function(err)
+--       return not err
+--    end)
+-- end
+
 ---Send a sub command and options to `macimed` launchd service
 ---@param args table|string
 ---@param cb fun(ok: boolean, data: string?)?
@@ -61,11 +70,14 @@ end
 
 ---@return table args
 local function get_leave_args()
+   local ctx = require('macime.context').ctx
+   local args = {}
+   if ctx.capability.daemon_method then table.insert(args, 'ime') end -- If daemon `method` is available
    if conf.opts.save.enabled then
       if conf.opts.save.scope == 'global' then
-         args = { 'set', conf.opts.ime.default, '--save' }
+         vim.list_extend(args, { 'set', conf.opts.ime.default, '--save' })
       elseif conf.opts.save.scope == 'session' then
-         args = { 'set', conf.opts.ime.default, '--save', '--session-id', get_session_id() }
+         vim.list_extend(args, { 'set', conf.opts.ime.default, '--save', '--session-id', get_session_id() })
       end
    else
       args = { 'set', conf.opts.ime.default }
@@ -77,11 +89,14 @@ end
 
 ---@return table args
 local function get_enter_args()
+   local ctx = require('macime.context').ctx
+   local args = {}
+   if ctx.capability.daemon_method then table.insert(args, 'ime') end -- If daemon `method` is available
    if conf.opts.save.enabled then
       if conf.opts.save.scope == 'global' then
-         args = { 'load' }
+         vim.list_extend(args, { 'load' })
       elseif conf.opts.save.scope == 'session' then
-         args = { 'load', '--session-id', get_session_id() }
+         vim.list_extend(args, { 'load', '--session-id', get_session_id() })
       end
    else -- no save / no load
       args = {}
@@ -136,13 +151,12 @@ local function add_autocmd()
 end
 
 function check_version()
-   local is_installed = (vim.fn.executable('macime') == 1)
-   if not is_installed then
+   local ctx = require('macime.context').ctx
+   if not ctx.macime.installed then
       local msg = '`macime` is not installed.\nSee `:checkhealth macime`'
       error(msg)
    end
-   local version = vim.trim(vim.fn.system({ 'macime', '--version' }))
-   if not vim.version.ge(version, '3.2.0') then
+   if not vim.version.ge(ctx.macime.version, '3.2.0') then
       local msg = '`macime` version must be >= 3.2.0\nSee `:checkhealth macime`'
       error(msg)
    end
@@ -153,6 +167,7 @@ end
 function M.setup(user_config)
    conf.opts = vim.tbl_deep_extend('force', conf.defaults, user_config)
    if conf.opts.vim.ttimeoutlen then vim.o.ttimeoutlen = conf.opts.vim.ttimeoutlen end
+   require('macime.context').create_context()
    check_version()
    add_autocmd()
 end
