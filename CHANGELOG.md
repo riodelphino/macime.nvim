@@ -2,6 +2,7 @@
 
 ## [v2.4.0](https://github.com/riodelphino/macime.nvim/compare/v2.3.0...v2.4.0) (2026-02-07)
 
+* **docs:** Update macOS version badge
 * **docs:** Add version badge
 * **feat:** Adapt to `macime` v3.6.0 (Send command like `ime set com.apple...` `daemon get sock-path`)
 * **docs:** Remove `(Fixed value)` from `sock_path` (Now changeable) in checkhealth

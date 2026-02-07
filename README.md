@@ -5,7 +5,7 @@
 [![Lua](https://img.shields.io/badge/Lua-5.x-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)](https://www.lua.org/)
 [![Neovim](https://img.shields.io/badge/Neovim-0.9%2B-%2357A143.svg?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
 [![Dependency](https://img.shields.io/badge/Dependency-macime(Homebrew)-%23FBB040?style=for-the-badge)](#installation)
-[![Platform](https://img.shields.io/badge/Platform-macOS%2010.13%2B-blue?style=for-the-badge)](#)
+[![Platform](https://img.shields.io/badge/Platform-macOS%2010.15%2B-blue?style=for-the-badge)](#)
 
 A wrapper plugin for [macime](https://github.com/riodelphino/macime) cli.  
 
