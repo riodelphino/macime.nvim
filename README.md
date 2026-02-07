@@ -1,5 +1,6 @@
 # macime.nvim
 
+![Version](https://img.shields.io/github/v/tag/riodelphino/macime.nvim?style=for-the-badge&cacheSeconds=0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-%232196F3.svg?style=for-the-badge)](LICENSE)
 [![Lua](https://img.shields.io/badge/Lua-5.x-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)](https://www.lua.org/)
 [![Neovim](https://img.shields.io/badge/Neovim-0.9%2B-%2357A143.svg?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
