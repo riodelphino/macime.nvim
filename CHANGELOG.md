@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.4.1](https://github.com/riodelphino/macime.nvim/compare/v2.4.0...v2.4.1) (2026-02-07)
+
+* **fix:** Update macOS version / Remove `--launchd` option
+
 ## [v2.4.0](https://github.com/riodelphino/macime.nvim/compare/v2.3.0...v2.4.0) (2026-02-07)
 
 * **docs:** Update macOS version badge

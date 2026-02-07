@@ -15,7 +15,7 @@ This plugin integrates [macime](https://github.com/riodelphino/macime) cli into 
 
 ## Dependencies
 
-- macOS >= 10.13
+- macOS >= 10.15
 - [macime](https://github.com/riodelphino/macime) >= 3.2.0
 - [nvim](https://neovim.io/) >= 0.9
 - swift >= 5.0 (Required for Homebrew build)
