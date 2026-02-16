@@ -50,6 +50,7 @@
 
 ---macime.Health
 ---@class macime.Health
+---@field ime_base_ok? boolean
 ---@field ime_default_ok? boolean
 ---@field macime_installed? boolean
 ---@field macime_version? string

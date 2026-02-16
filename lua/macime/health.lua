@@ -1,6 +1,8 @@
 local health = vim.health
 local M = {}
 
+local ime_base = 'com.apple.keylayout.ABC'
+
 ---Check system
 ---@return macime.Health health
 function M.get_health()
@@ -75,6 +77,8 @@ function M.get_health()
    end
 
    -- Check ime.default enabled
+   stdout = vim.fn.system(string.format('macime list --select-capable | grep %s', ime_base))
+   if vim.trim(stdout) == ime_base then h.ime_base_ok = true end
    stdout = vim.fn.system(string.format('macime list --select-capable | grep %s', opts.ime.default))
    if vim.trim(stdout) == opts.ime.default then h.ime_default_ok = true end
 
@@ -164,11 +168,16 @@ function M.check()
    vim.health.start('Selected Backend')
    health.info(opts.socket.enabled and '`macimed` (socket)' or '`macime` (direct)')
 
-   vim.health.start('IME default')
-   if h.ime_default_ok then
-      health.ok(string.format('%s : Valid', opts.ime.default))
+   vim.health.start('IME')
+   if h.ime_base_ok then
+      health.ok(string.format('Base    : %s : Valid', ime_base))
    else
-      health.error(string.format('%s : Invalid', opts.ime.default), 'Get the valid IME ID via `macime list --select-capable` or `macime get` command.')
+      health.error(string.format('Base    : %s : Invalid', ime_base), string.format('Ensure `%s` installed.', ime_base))
+   end
+   if h.ime_default_ok then
+      health.ok(string.format('Default : %s : Valid', opts.ime.default))
+   else
+      health.error(string.format('Default : %s : Invalid', opts.ime.default), 'Get the valid IME ID via `macime list --select-capable` or `macime get` command.')
    end
 
    if opts.socket.enabled then

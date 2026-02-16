@@ -2,6 +2,7 @@
 
 ## [v2.4.1](https://github.com/riodelphino/macime.nvim/compare/v2.4.0...v2.4.1) (2026-02-17)
 
+* **docs:** Add base IME `com.apple.keylayout.ABC` to checkhealth
 * **docs:** Add `com.apple.keylayout.ABC` to requirements
 * **fix:** Disable CJK refreshing on `InsertLeave`
 * **fix:** Update macOS version / Remove `--launchd` option

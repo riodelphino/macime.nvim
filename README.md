@@ -112,7 +112,7 @@ It shows diagnostic information and gives useful advices about:
 - Command version
 - Capability
 - Selected Backend
-- IME default
+- IME
 - Socket
 - Homebrew Service
 
