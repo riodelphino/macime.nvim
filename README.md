@@ -19,7 +19,7 @@ This plugin integrates [macime](https://github.com/riodelphino/macime) cli into 
 - [macime](https://github.com/riodelphino/macime) >= 3.2.0
 - [nvim](https://neovim.io/) >= 0.9
 - swift >= 5.0 (Required for Homebrew build)
-
+- `com.apple.keylayout.ABC` is installed and enabled
 
 ## Breaking Changes
 
