@@ -82,7 +82,7 @@ local function get_leave_args()
    else
       args = { 'set', conf.opts.ime.default }
    end
-   if conf.opts.ime.cjk_refresh then table.insert(args, '--cjk-refresh ') end
+   -- if conf.opts.ime.cjk_refresh then table.insert(args, '--cjk-refresh ') end -- No need to CJK refresh on InsertLeave
    return args
 end
 
