@@ -17,6 +17,7 @@ M.defaults = {
    socket = {
       enabled = false,
       path = '/tmp/riodelphino.macimed.sock',
+      log_level = 'info',
    },
    include = {
       pattern = nil,

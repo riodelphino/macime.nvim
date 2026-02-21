@@ -1,6 +1,6 @@
 # macime.nvim
 
-![Version](https://img.shields.io/github/v/tag/riodelphino/macime.nvim?style=for-the-badge&cacheSeconds=0)
+![Version](https://img.shields.io/github/v/tag/riodelphino/macime.nvim?tag=v2.5.0&style=for-the-badge&cacheSeconds=0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-%232196F3.svg?style=for-the-badge)](LICENSE)
 [![Lua](https://img.shields.io/badge/Lua-5.x-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)](https://www.lua.org/)
 [![Neovim](https://img.shields.io/badge/Neovim-0.9%2B-%2357A143.svg?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
@@ -51,6 +51,7 @@ local defaults = {
    ime = {
       default = 'com.apple.keylayout.ABC', -- (string): The default IME ID (set in 'InsertLeave')
       cjk_refresh = false, -- (boolean): Enable/Disable IME refreshing for CJK input methods (Experimental)
+      cjk_delay = nil, -- (number): Specify cjk refresh delay for stable switching between 0 and 1. (Default: 0.05) (Experimental)
    },
    save = {
       enabled = true, -- (boolean): Enable/Disable save and restore previous IME
@@ -227,6 +228,14 @@ require('macime').send("daemon get macime-path", function(ok, data)
       print("macime-path: " .. data)
    end
 end)
+
+-- Set log level
+require('macime').send("daemon set log-levela info", function(ok, data)
+   if ok then
+      print(data)
+   end
+end)
+
 ```
 
 ## TODO

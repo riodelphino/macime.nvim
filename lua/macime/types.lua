@@ -17,6 +17,7 @@
 ---@class macime.Config.Socket
 ---@field enabled? boolean
 ---@field path? string
+---@field log_level? "debug"|"info"|"warn"|"error"
 
 ---@class macime.Config.Ime
 ---@field default? string
@@ -49,6 +50,7 @@
 ---@field cjk_refresh boolean -- `macime` >= 3.5.0
 ---@field cjk_delay boolean -- `macime` >= 4.3.0
 ---@field daemon_socket_api boolean -- `macime` >= 3.6.0
+---@field log_level boolean -- `macime` >= v4.2.0
 
 ---macime.Health
 ---@class macime.Health
@@ -66,6 +68,7 @@
 ---@field capability_cjk_refresh? boolean
 ---@field capability_cjk_delay? boolean
 ---@field capability_daemon_socket_api? boolean
+---@field capability_log_level? boolean
 ---@field service_name? string
 ---@field service_status? string
 ---@field service_user? string

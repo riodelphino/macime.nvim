@@ -31,6 +31,7 @@ function M.get_health()
    h.capability_daemon = ctx.capability.macimed_daemon
    h.capability_cjk_refresh = ctx.capability.cjk_refresh
    h.capability_daemon_socket_api = ctx.capability.daemon_socket_api
+   h.capability_log_level = ctx.capability.log_level
 
    -- Check Socket
    h.macimed_status, h.macimed_sock_path, h.macimed_macime_path = '', '', ''
@@ -168,6 +169,11 @@ function M.check()
       health.ok('cjk_delay : Available (`macime` >= 4.3.0)')
    else
       health.warn('cjk_delay : Not Available', { 'Available for `macime` >= 4.3.0', 'Try: `brew update; brew upgrade macime' })
+   end
+   if h.capability_log_level then
+      health.ok('log_level : Available (`macime` >= 4.3.0)')
+   else
+      health.warn('log_level : Not Available', { 'Available for `macime` >= 4.3.0', 'Try: `brew update; brew upgrade macime' })
    end
 
    vim.health.start('Selected Backend')

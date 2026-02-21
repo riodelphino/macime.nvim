@@ -16,6 +16,7 @@ M.ctx = {
       cjk_refresh = false,
       cjk_delay = false,
       daemon_socket_api = false,
+      log_level = false,
    },
 }
 
@@ -35,6 +36,7 @@ function M.create_context()
    c.cjk_refresh = vim.version.ge(m.version, '3.5.0') -- >= 3.5.0
    c.cjk_delay = vim.version.ge(m.version, '4.3.0') -- >= 4.3.0
    c.daemon_socket_api = vim.version.ge(m.version, '3.6.0') -- >= 3.6.0
+   c.log_level = vim.version.ge(m.version, '4.3.0') -- >= 4.3.0
 end
 
 return M

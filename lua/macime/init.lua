@@ -160,6 +160,16 @@ function check_version()
    end
 end
 
+function set_log_level()
+   local ctx = require('macime.context').ctx
+   if ctx.capability.log_level then
+      local cmd = string.format('daemon set log-level %s', conf.opts.socket.log_level or '')
+      M.send(cmd, function(ok, data)
+         if ok then print(data) end
+      end)
+   end
+end
+
 ---Setup
 ---@param user_config macime.Config
 function M.setup(user_config)
@@ -168,6 +178,7 @@ function M.setup(user_config)
    require('macime.context').create_context()
    check_version()
    add_autocmd()
+   set_log_level()
 end
 
 return M
