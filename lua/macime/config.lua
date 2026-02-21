@@ -8,6 +8,7 @@ M.defaults = {
    ime = {
       default = 'com.apple.keylayout.ABC',
       cjk_refresh = false,
+      cjk_delay = nil,
    },
    save = {
       enabled = true,

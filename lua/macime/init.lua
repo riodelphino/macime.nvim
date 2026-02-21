@@ -72,7 +72,7 @@ end
 local function get_leave_args()
    local ctx = require('macime.context').ctx
    local args = {}
-   if ctx.capability.daemon_method then table.insert(args, 'ime') end -- If daemon `method` is available
+   if ctx.capability.daemon_socket_api then table.insert(args, 'ime') end -- If daemon `method` is available
    if conf.opts.save.enabled then
       if conf.opts.save.scope == 'global' then
          vim.list_extend(args, { 'set', conf.opts.ime.default, '--save' })
@@ -90,7 +90,7 @@ end
 local function get_enter_args()
    local ctx = require('macime.context').ctx
    local args = {}
-   if ctx.capability.daemon_method then table.insert(args, 'ime') end -- If daemon `method` is available
+   if ctx.capability.daemon_socket_api then table.insert(args, 'ime') end -- If daemon `method` is available
    if conf.opts.save.enabled then
       if conf.opts.save.scope == 'global' then
          vim.list_extend(args, { 'load' })

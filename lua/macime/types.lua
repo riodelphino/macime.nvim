@@ -21,6 +21,7 @@
 ---@class macime.Config.Ime
 ---@field default? string
 ---@field cjk_refresh? boolean
+---@field cjk_delay? number
 
 ---@class macime.Config.Include
 ---@field pattern? string|string[]
@@ -46,6 +47,7 @@
 ---@field macime_direct boolean -- `macime` >= 3.2.0
 ---@field macimed_daemon boolean -- `macime` >= 3.2.0
 ---@field cjk_refresh boolean -- `macime` >= 3.5.0
+---@field cjk_delay boolean -- `macime` >= 4.3.0
 ---@field daemon_socket_api boolean -- `macime` >= 3.6.0
 
 ---macime.Health
@@ -62,6 +64,7 @@
 ---@field capability_direct? boolean
 ---@field capability_daemon? boolean
 ---@field capability_cjk_refresh? boolean
+---@field capability_cjk_delay? boolean
 ---@field capability_daemon_socket_api? boolean
 ---@field service_name? string
 ---@field service_status? string

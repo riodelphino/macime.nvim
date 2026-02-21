@@ -164,6 +164,11 @@ function M.check()
    else
       health.warn('cjk_refresh : Not Available', { 'Available for `macime` >= 3.5.0', 'Try: `brew update; brew upgrade macime' })
    end
+   if h.capability_cjk_delay then
+      health.ok('cjk_delay : Available (`macime` >= 4.3.0)')
+   else
+      health.warn('cjk_delay : Not Available', { 'Available for `macime` >= 4.3.0', 'Try: `brew update; brew upgrade macime' })
+   end
 
    vim.health.start('Selected Backend')
    health.info(opts.socket.enabled and '`macimed` (socket)' or '`macime` (direct)')

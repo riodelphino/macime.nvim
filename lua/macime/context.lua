@@ -14,6 +14,7 @@ M.ctx = {
       macime_direct = false,
       macimed_daemon = false,
       cjk_refresh = false,
+      cjk_delay = false,
       daemon_socket_api = false,
    },
 }
@@ -32,6 +33,7 @@ function M.create_context()
    c.macime_direct = vim.version.ge(m.version, '3.2.0') -- >= 3.2.0
    c.macimed_daemon = vim.version.ge(m.version, '3.2.0') -- >= 3.2.0
    c.cjk_refresh = vim.version.ge(m.version, '3.5.0') -- >= 3.5.0
+   c.cjk_delay = vim.version.ge(m.version, '4.3.0') -- >= 4.3.0
    c.daemon_socket_api = vim.version.ge(m.version, '3.6.0') -- >= 3.6.0
 end
 
