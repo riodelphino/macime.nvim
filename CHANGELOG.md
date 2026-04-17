@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.6.0](https://github.com/riodelphino/macime.nvim/compare/v2.5.0...v2.6.0) (2026-04-18)
+
+* **fix:** Enable `cjk_delay` checking in checkhealth
+
 ## [v2.5.0](https://github.com/riodelphino/macime.nvim/compare/v2.4.1...v2.5.0) (2026-02-21)
 
 * **feat:** Adapt to `--log-level` option in `macime` v4.3.0

@@ -30,6 +30,7 @@ function M.get_health()
    h.capability_direct = ctx.capability.macime_direct
    h.capability_daemon = ctx.capability.macimed_daemon
    h.capability_cjk_refresh = ctx.capability.cjk_refresh
+   h.capability_cjk_delay = ctx.capability.cjk_delay
    h.capability_daemon_socket_api = ctx.capability.daemon_socket_api
    h.capability_log_level = ctx.capability.log_level
 
