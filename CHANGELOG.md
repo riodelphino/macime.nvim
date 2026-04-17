@@ -2,6 +2,7 @@
 
 ## [v2.6.0](https://github.com/riodelphino/macime.nvim/compare/v2.5.0...v2.6.0) (2026-04-18)
 
+* **chore:** Remove deprecated `macime_path` from checkhealth
 * **chore:** Suppress warnings with `vim.uv.new_pipe` and `vim.loop.spawn` in `init.lua`
 * **fix:** Enable `cjk_delay` checking in checkhealth
 

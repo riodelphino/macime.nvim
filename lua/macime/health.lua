@@ -35,7 +35,7 @@ function M.get_health()
    h.capability_log_level = ctx.capability.log_level
 
    -- Check Socket
-   h.macimed_status, h.macimed_sock_path, h.macimed_macime_path = '', '', ''
+   h.macimed_status, h.macimed_sock_path = '', ''
    if ctx.capability.daemon_socket_api then
       -- For `macime` >= v3.6.0
       local pipe = vim.uv.new_pipe(false)
@@ -45,14 +45,10 @@ function M.get_health()
             require('macime').send('daemon info', function(ok, data) -- TODO: [UNSTABLE] Finishing this cb before exiting `get_health()` is not ensured.
                if ok then
                   local info = vim.json.decode(data)
-                  if info then
-                     h.macimed_sock_path = info['sock-path']
-                     h.macimed_macime_path = info['macime-path']
-                  end
+                  if info then h.macimed_sock_path = info['sock-path'] end
                else
                   -- TODO: Add error handling
                   h.macimed_sock_path = 'ERROR: Cannot get sock-path'
-                  h.macimed_macime_path = 'ERROR: Cannot get macime-path'
                end
             end)
          else
@@ -71,8 +67,6 @@ function M.get_health()
                h.macimed_status = v
             elseif k == 'sock-path' then
                h.macimed_sock_path = v .. ' (Note: `MACIME_SOCK_PATH` is not reflected)'
-            elseif k == 'macime-path' then
-               h.macimed_macime_path = v .. ' (Note: `MACIME_PATH` is not reflected)'
             end
          end
       end
@@ -197,9 +191,8 @@ function M.check()
       if h.macimed_installed then
          if h.macimed_status == 'running' then
             health.ok(string.format('`macimed` : %s', h.macimed_status))
-            if h.macimed_sock_path or h.macimed_macime_path then -- `macimed --info` is available for `macimed` >= v3.3.0
+            if h.macimed_sock_path then -- `macimed --info` is available for `macimed` >= v3.3.0
                health.info(string.format('sock-path   : %s', h.macimed_sock_path))
-               health.info(string.format('macime-path : %s', h.macimed_macime_path))
             end
          elseif h.macimed_status == 'stopped' then
             if opts.socket.enabled then

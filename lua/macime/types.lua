@@ -62,7 +62,6 @@
 ---@field macimed_version? string
 ---@field macimed_status? string
 ---@field macimed_sock_path? string
----@field macimed_macime_path? string
 ---@field capability_direct? boolean
 ---@field capability_daemon? boolean
 ---@field capability_cjk_refresh? boolean
