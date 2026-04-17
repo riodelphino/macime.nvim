@@ -19,7 +19,7 @@ local M = {}
 ---@param args table|string
 ---@param cb fun(ok: boolean, data: string?)?
 function M.send(args, cb)
-   local pipe = vim.uv.new_pipe(false)
+   local pipe = assert(vim.uv.new_pipe(false), 'uv.new_pipe() failed.')
 
    if type(args) == 'table' then args = table.concat(args, ' ') end
 
@@ -122,7 +122,7 @@ local function add_autocmd()
                args = args,
                stdio = { nil, nil, nil },
                detach = true,
-            })
+            }, function() end)
          end
       end,
    })
@@ -142,7 +142,7 @@ local function add_autocmd()
                args = args,
                stdio = { nil, nil, nil },
                detach = true,
-            })
+            }, function() end)
          end
       end,
    })
