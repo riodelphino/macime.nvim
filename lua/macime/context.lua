@@ -21,14 +21,30 @@ M.ctx = {
 }
 
 function M.create_context()
+   local conf = require('macime.config')
+   -- Check if socket exists to skip version check
+   local has_socket = conf.opts.socket.enabled and vim.fn.empty(vim.fn.glob(conf.opts.socket.path)) ~= 1
+
    -- Macime
    local m = M.ctx.macime
    m.installed = (vim.fn.executable('macime') == 1)
-   m.version = vim.trim(vim.fn.system({ 'macime', '--version' }))
+   if m.installed then
+      m.version = vim.trim(vim.fn.system({ 'macime', '--version' }))
+   elseif has_socket then
+      m.version = '99.0.0'
+   else
+      m.version = ''
+   end
    -- Macimed
    local md = M.ctx.macimed
    md.installed = (vim.fn.executable('macimed') == 1)
-   md.version = vim.trim(vim.fn.system({ 'macimed', '--version' }))
+   if md.installed then
+      md.version = vim.trim(vim.fn.system({ 'macimed', '--version' }))
+   elseif has_socket then
+      md.version = '99.0.0'
+   else
+      md.version = ''
+   end
    -- Capability
    local c = M.ctx.capability
    c.macime_direct = vim.version.ge(m.version, '3.2.0') -- >= 3.2.0

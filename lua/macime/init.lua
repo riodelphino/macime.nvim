@@ -150,7 +150,8 @@ end
 
 function check_version()
    local ctx = require('macime.context').ctx
-   if not ctx.macime.installed then
+   local has_socket = conf.opts.socket.enabled and vim.fn.empty(vim.fn.glob(conf.opts.socket.path)) ~= 1
+   if not ctx.macime.installed and not has_socket then
       local msg = '`macime` is not installed.\nSee `:checkhealth macime`'
       error(msg)
    end
