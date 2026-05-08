@@ -26,7 +26,9 @@ function M.send(args, cb)
    vim.uv.pipe_connect(pipe, conf.opts.socket.path, function(connect_err)
       if connect_err then
          local msg = string.format('Connect failed: %s\n\n%s', connect_err, msgs.pipe.connect_failed)
-         vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
+         vim.schedule(function()
+            vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
+         end)
          pipe:close()
          if type(cb) == 'function' then cb(false, msg) end
          return
@@ -36,7 +38,9 @@ function M.send(args, cb)
       pipe:write(args .. '\n', function(write_err)
          if write_err then
             local msg = string.format('Write failed: %s\n\n%s', write_err, msgs.pipe.write_failed)
-            vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
+            vim.schedule(function()
+               vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
+            end)
             pipe:close()
             if type(cb) == 'function' then cb(false, msg) end
             return
@@ -47,7 +51,9 @@ function M.send(args, cb)
          pipe:read_start(function(read_err, data)
             if read_err then
                local msg = string.format('Read failed: %s\n\n%s', read_err, msgs.pipe.read_failed)
-               vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
+               vim.schedule(function()
+                  vim.notify(msg, vim.log.levels.ERROR, { title = 'macime.nvim' })
+               end)
                pipe:close()
                if type(cb) == 'function' then cb(false, msg) end
                return
