@@ -192,7 +192,7 @@ function M.check()
          if h.macimed_status == 'running' then
             health.ok(string.format('`macimed` : %s', h.macimed_status))
             if h.macimed_sock_path then -- `macimed --info` is available for `macimed` >= v3.3.0
-               health.info(string.format('sock-path   : %s', h.macimed_sock_path))
+               health.info(string.format('sock-path     : %s', h.macimed_sock_path))
             end
          elseif h.macimed_status == 'stopped' then
             if opts.socket.enabled then

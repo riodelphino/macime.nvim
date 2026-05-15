@@ -2,6 +2,7 @@
 
 ## [v2.6.1](https://github.com/riodelphino/macime.nvim/compare/v2.6.0...v2.6.1) (2026-05-16)
 
+* **docs:** Align indent in `checkhealth` -> `sock-path`
 * **docs:** Typo in `#### Method: daemon`
 * **fix:** Suppress the `log level set to: *` message in `set_log_level()` unless an error occurs
 
