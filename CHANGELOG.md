@@ -2,6 +2,7 @@
 
 ## [v2.6.1](https://github.com/riodelphino/macime.nvim/compare/v2.6.0...v2.6.1) (2026-05-16)
 
+* **docs:** Show `log-level` in `checkhealth`
 * **docs:** Add a code example for `daemon get log-level`
 * **docs:** Align indent in `checkhealth` -> `sock-path`
 * **docs:** Typo in `#### Method: daemon`

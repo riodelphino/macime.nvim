@@ -35,7 +35,7 @@ function M.get_health()
    h.capability_log_level = ctx.capability.log_level
 
    -- Check Socket
-   h.macimed_status, h.macimed_sock_path = '', ''
+   h.macimed_status, h.macimed_sock_path, h.macimed_log_level = '', '', ''
    if ctx.capability.daemon_socket_api then
       -- For `macime` >= v3.6.0
       local pipe = vim.uv.new_pipe(false)
@@ -49,6 +49,14 @@ function M.get_health()
                else
                   -- TODO: Add error handling
                   h.macimed_sock_path = 'ERROR: Cannot get sock-path'
+               end
+            end)
+            require('macime').send('daemon get log-level', function(ok, data)
+               if ok then
+                  h.macimed_log_level = data
+               else
+                  -- TODO: Add error handling
+                  h.macimed_log_level = 'ERROR: Cannot get log-level'
                end
             end)
          else
@@ -193,6 +201,9 @@ function M.check()
             health.ok(string.format('`macimed` : %s', h.macimed_status))
             if h.macimed_sock_path then -- `macimed --info` is available for `macimed` >= v3.3.0
                health.info(string.format('sock-path     : %s', h.macimed_sock_path))
+            end
+            if h.macimed_log_level then -- `macimed get log-level` is available for `macimed` >= 4.5.0
+               health.info(string.format('log-level     : %s', h.macimed_log_level))
             end
          elseif h.macimed_status == 'stopped' then
             if opts.socket.enabled then
