@@ -230,7 +230,7 @@ require('macime').send("daemon get macime-path", function(ok, data)
 end)
 
 -- Set log level
-require('macime').send("daemon set log-levela info", function(ok, data)
+require('macime').send("daemon set log-level info", function(ok, data)
    if ok then
       print(data)
    end
