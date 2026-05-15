@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.6.1](https://github.com/riodelphino/macime.nvim/compare/v2.6.0...v2.6.1) (2026-05-15)
+
+* **fix:** Suppress the `log level set to: *` message in `set_log_level()` unless an error occurs
+
 ## [v2.6.0](https://github.com/riodelphino/macime.nvim/compare/v2.5.0...v2.6.0) (2026-04-18)
 
 * **chore:** Remove deprecated `macime_path` from checkhealth

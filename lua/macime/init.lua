@@ -165,7 +165,7 @@ function set_log_level()
    if ctx.capability.log_level then
       local cmd = string.format('daemon set log-level %s', conf.opts.socket.log_level or '')
       M.send(cmd, function(ok, data)
-         if ok then print(data) end
+         if not ok then error(vim.inspect(data)) end
       end)
    end
 end
