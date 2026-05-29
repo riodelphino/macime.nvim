@@ -61,6 +61,7 @@ local defaults = {
       -- Ensure `macime` >= v3.2.0 installed and `macimed` is running directly or via Homebrew service
       enabled = false, -- (bool): True to use launchd service for faster switching
       path = '/tmp/riodelphino.macimed.sock', -- (string): The sock path to listen (Usually no need to change)
+      log_level = "info", -- ("debug"|"info"|"warn"|"error"): log level
    },
    include = {
       pattern = {"*"}, -- (string|[string]): Enable with specific file patterns (e.g. "*" or { "*.h", "*.c" } )
