@@ -13,6 +13,10 @@
 ---@class macime.Config.Save
 ---@field enabled? boolean
 ---@field scope? "global"|"session"
+---@field exclusive? macime.Config.Save.Exclusive
+
+---@class macime.Config.Save.Exclusive
+---@field filetype? string[]
 
 ---@class macime.Config.Socket
 ---@field enabled? boolean

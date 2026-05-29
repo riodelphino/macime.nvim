@@ -13,6 +13,9 @@ M.defaults = {
    save = {
       enabled = true,
       scope = 'session',
+      exclusive = {
+         filetype = {},
+      },
    },
    socket = {
       enabled = false,

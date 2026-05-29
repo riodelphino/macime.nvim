@@ -1,6 +1,6 @@
 # macime.nvim
 
-![Version](https://img.shields.io/github/v/tag/riodelphino/macime.nvim?tag=v2.6.1&style=for-the-badge&cacheSeconds=0)
+![Version](https://img.shields.io/github/v/tag/riodelphino/macime.nvim?tag=v2.7.0&style=for-the-badge&cacheSeconds=0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-%232196F3.svg?style=for-the-badge)](LICENSE)
 [![Lua](https://img.shields.io/badge/Lua-5.x-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)](https://www.lua.org/)
 [![Neovim](https://img.shields.io/badge/Neovim-0.9%2B-%2357A143.svg?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
@@ -56,6 +56,9 @@ local defaults = {
    save = {
       enabled = true, -- (boolean): Enable/Disable save and restore previous IME
       scope = "global", -- ("global"|"session"): Save previous IME per session or globally
+      exclusive = {
+         filetype = {}, -- Save IME mode independently per filetype (e.g. { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' } )
+      },
    },
    socket = {
       -- Ensure `macime` >= v3.2.0 installed and `macimed` is running directly or via Homebrew service
@@ -67,7 +70,7 @@ local defaults = {
       pattern = {"*"}, -- (string|[string]): Enable with specific file patterns (e.g. "*" or { "*.h", "*.c" } )
    },
    exclude = {
-      filetype = {}, -- (string|[string]): Disable with specific filetypes (e.g. { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' } )
+      filetype = {}, -- (string|[string]): Disable with specific filetypes
    },
 }
 ```
@@ -85,12 +88,13 @@ Recommended setup:
       save = {
          enabled = true,
          scope = "global", -- Save previous IME globally
+         exclusive = {
+            -- Save IME mode independently (useful for input/prompt filetypes)
+            filetype = { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' },
+         },
       },
       socket = {
          enabled = true, -- Enable `macimed` launchd service for blazing faster switching
-      },
-      exclude = {
-         filetype = { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, -- Exclude specific filetypes
       },
    }
 }
@@ -121,16 +125,17 @@ It shows diagnostic information and gives useful advices about:
 
 ## Issues
 
-### Shared IME ID
+### IME mode is restored also in input/prompt UI
 
-The saved IME ID is shared between nvim's main|floating|split windows. This causes unintended IME restoring when entering to input-mode.  
+The saved IME ID is shared between all the main|floating|split windows in nvim. This causes unintended IME restoring when entering to input-mode.  
 
-A solution for now:
-
-Adding these window filetypes to `opts.exclude.filetype`:
+A solution for this is in `v2.7.0`, adding these filetypes to `opts.save.exclusive.filetype`:
 ```lua
-exclude = {
-   filetype = {'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, 
+save = {
+   exclusive = {
+      -- Save the IME ID independently per filetypes.
+      filetype = {'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }, 
+   },
 }
 ```
 
@@ -260,6 +265,9 @@ end)
 
 - [ ] Enable in command-line mode  
   Tried once, but benefits were limited and code complexity increased.
+
+- [x] Exclusive saving per filetypes  
+  Save as `nvim-{pid}-{filetype}`. Useful for prompt/input UI.
 
 ### Others
 

@@ -64,7 +64,17 @@ end
 
 ---@return string session_id
 local function get_session_id()
-   local session_id = 'nvim-' .. vim.fn.getpid()
+   local session_id, prefix = '', ''
+   if conf.opts.save.scope == 'global' then
+      prefix = 'nvim'
+   elseif conf.opts.save.scope == 'session' then
+      prefix = 'nvim-' .. vim.fn.getpid()
+   end
+   if vim.tbl_contains(conf.opts.save.exclusive.filetype, vim.bo.filetype) then
+      session_id = prefix .. '-' .. vim.bo.filetype
+   else
+      session_id = prefix
+   end
    return session_id
 end
 
@@ -74,11 +84,7 @@ local function get_leave_args()
    local args = {}
    if ctx.capability.daemon_socket_api then table.insert(args, 'ime') end -- If daemon `method` is available
    if conf.opts.save.enabled then
-      if conf.opts.save.scope == 'global' then
-         vim.list_extend(args, { 'set', conf.opts.ime.default, '--save' })
-      elseif conf.opts.save.scope == 'session' then
-         vim.list_extend(args, { 'set', conf.opts.ime.default, '--save', '--session-id', get_session_id() })
-      end
+      args = { 'set', conf.opts.ime.default, '--save', '--session-id', get_session_id() }
    else
       args = { 'set', conf.opts.ime.default }
    end
@@ -92,11 +98,7 @@ local function get_enter_args()
    local args = {}
    if ctx.capability.daemon_socket_api then table.insert(args, 'ime') end -- If daemon `method` is available
    if conf.opts.save.enabled then
-      if conf.opts.save.scope == 'global' then
-         vim.list_extend(args, { 'load' })
-      elseif conf.opts.save.scope == 'session' then
-         vim.list_extend(args, { 'load', '--session-id', get_session_id() })
-      end
+      args = { 'load', '--session-id', get_session_id() }
    else -- no save / no load
       args = {}
    end
