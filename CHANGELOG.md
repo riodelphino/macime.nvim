@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.6.2](https://github.com/riodelphino/macime.nvim/compare/v2.6.1...v2.6.2) (2026-05-29)
+
+* **docs:** Fix `Breaking Changes` list formatting
+ 
 ## [v2.6.1](https://github.com/riodelphino/macime.nvim/compare/v2.6.0...v2.6.1) (2026-05-16)
 
 * **docs:** Show `log-level` in `checkhealth`

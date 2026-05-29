@@ -23,10 +23,10 @@ This plugin integrates [macime](https://github.com/riodelphino/macime) cli into 
 
 ## Breaking Changes
 
-[v2.3.0](https://github.com/riodelphino/macime.nvim/releases/tag/v2.3.0): Adapt to `--cjk-refersh` option in `macime` v3.5.0
-[v2.2.3](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.3): Config structure was changed
-[v2.2.2](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.2): Config structure was changed
-[v2.2.2](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.2): `macime` < v3.2.0 is deprecated
+- [v2.3.0](https://github.com/riodelphino/macime.nvim/releases/tag/v2.3.0): Adapt to `--cjk-refersh` option in `macime` v3.5.0
+- [v2.2.3](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.3): Config structure was changed
+- [v2.2.2](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.2): Config structure was changed
+- [v2.2.2](https://github.com/riodelphino/macime.nvim/releases/tag/v2.2.2): `macime` < v3.2.0 is deprecated
 
 
 ## Install
