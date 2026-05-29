@@ -84,7 +84,7 @@ Recommended setup:
       },
       save = {
          enabled = true,
-         scope = "session", -- Save previous IME per nvim pid
+         scope = "global", -- Save previous IME globally
       },
       socket = {
          enabled = true, -- Enable `macimed` launchd service for blazing faster switching

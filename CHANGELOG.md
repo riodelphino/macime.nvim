@@ -2,6 +2,7 @@
 
 ## [v2.6.2](https://github.com/riodelphino/macime.nvim/compare/v2.6.1...v2.6.2) (2026-05-29)
 
+* **docs:** Change recommended `save.scope` config
 * **docs:** Remove `experimental` from `ime.cjk_*` config
 * **docs:** Add missing `socket.log_level` config
 * **docs:** Fix `Breaking Changes` list formatting
