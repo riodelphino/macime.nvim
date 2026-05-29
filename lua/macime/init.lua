@@ -152,6 +152,7 @@ end
 
 function check_version()
    local ctx = require('macime.context').ctx
+   if conf.opts.socket.forwarded then return end -- Skip checkes when using SSH socket forwarding
    if not ctx.macime.installed then
       local msg = '`macime` is not installed.\nSee `:checkhealth macime`'
       error(msg)
@@ -177,7 +178,7 @@ end
 function M.setup(user_config)
    conf.opts = vim.tbl_deep_extend('force', conf.defaults, user_config)
    if conf.opts.vim.ttimeoutlen then vim.o.ttimeoutlen = conf.opts.vim.ttimeoutlen end
-   require('macime.context').create_context()
+   require('macime.context').create_context(conf.opts)
    check_version()
    add_autocmd()
    set_log_level()

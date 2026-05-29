@@ -20,6 +20,7 @@ M.defaults = {
    socket = {
       enabled = false,
       path = '/tmp/riodelphino.macimed.sock',
+      forwarded = false,
       log_level = 'info',
    },
    include = {

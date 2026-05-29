@@ -2,6 +2,7 @@
 
 ## [v2.7.0](https://github.com/riodelphino/macime.nvim/compare/v2.6.1...v2.7.0) (2026-05-30)
 
+* **feat:** Add `socket.fowarded` config
 * **feat:** Add `save.exclusive.filetype` config
 * **docs:** Change recommended `save.scope` config
 * **docs:** Remove `experimental` from `ime.cjk_*` config

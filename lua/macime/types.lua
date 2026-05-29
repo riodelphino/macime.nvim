@@ -21,6 +21,7 @@
 ---@class macime.Config.Socket
 ---@field enabled? boolean
 ---@field path? string
+---@field forwarded? boolean
 ---@field log_level? "debug"|"info"|"warn"|"error"
 
 ---@class macime.Config.Ime

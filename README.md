@@ -64,6 +64,7 @@ local defaults = {
       -- Ensure `macime` >= v3.2.0 installed and `macimed` is running directly or via Homebrew service
       enabled = false, -- (bool): True to use launchd service for faster switching
       path = '/tmp/riodelphino.macimed.sock', -- (string): The sock path to listen (Usually no need to change)
+      forwarded = false, -- (boolean): Set true when macimed socket is forwarded via SSH (Skip all the checks)
       log_level = "info", -- ("debug"|"info"|"warn"|"error"): log level
    },
    include = {

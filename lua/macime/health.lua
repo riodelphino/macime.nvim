@@ -11,7 +11,7 @@ function M.get_health()
    local ctx = require('macime.context').ctx
    local stdout
 
-   require('macime.context').create_context() -- refresh context
+   require('macime.context').create_context(opts) -- refresh context
 
    -- Check macime installed and version
    h.macime_installed = ctx.macime.installed
@@ -130,10 +130,18 @@ function M.parse_plist(path)
 end
 
 function M.check()
-   local h = M.get_health()
    local opts = require('macime.config').opts
 
+   if opts.socket.forwarded then
+      health.ok('Skipping all checks: `socket.forwarded` is enabled.')
+      health.ok('`macime` is running via SSH socket forwarding.')
+      return
+   end
+
+   local h = M.get_health()
+
    vim.health.start('Command version')
+
    if h.macime_installed then
       if h.capability_direct then
          health.ok(string.format('`macime` : %s (>= 3.2.0)', h.macime_version))
