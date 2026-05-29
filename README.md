@@ -50,8 +50,8 @@ local defaults = {
    },
    ime = {
       default = 'com.apple.keylayout.ABC', -- (string): The default IME ID (set in 'InsertLeave')
-      cjk_refresh = false, -- (boolean): Enable/Disable IME refreshing for CJK input methods (Experimental)
-      cjk_delay = nil, -- (number): Specify cjk refresh delay for stable switching between 0 and 1. (Default: 0.05) (Experimental)
+      cjk_refresh = false, -- (boolean): Enable/Disable IME refreshing for CJK input methods
+      cjk_delay = nil, -- (number): Specify cjk refresh delay for stable switching between 0 and 1. (Default: 0.05)
    },
    save = {
       enabled = true, -- (boolean): Enable/Disable save and restore previous IME
