@@ -57,7 +57,8 @@ local defaults = {
       enabled = true, -- (boolean): Enable/Disable save and restore previous IME
       scope = "global", -- ("global"|"session"): Save previous IME per session or globally
       exclusive = {
-         filetype = {}, -- Save IME mode independently per filetype (e.g. { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' } )
+         -- Save IME mode independently per filetype (useful for input/prompt UI)
+         filetype = {}, -- e.g. { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' }
       },
    },
    socket = {
@@ -90,7 +91,7 @@ Recommended setup:
          enabled = true,
          scope = "global", -- Save previous IME globally
          exclusive = {
-            -- Save IME mode independently (useful for input/prompt filetypes)
+            -- Save IME mode independently per filetype for common input/prompt UI
             filetype = { 'TelescopePrompt', 'snacks_picker_input', 'neo-tree-popup', 'neo-tree-filter' },
          },
       },
