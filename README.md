@@ -107,6 +107,48 @@ With above recommended settings, ensure followings:
 
 See more details at: [riodelphino/macime](https://github.com/riodelphino/macime)
 
+## Advanced
+
+### SSH Socket Forwarding
+
+You can use `nvim` and `macime.nvim` on a remote machine over SSH,
+to switch your local IME mode via socket forwarding.
+
+Add to your `~/.ssh/config`:
+```ssh_config
+RemoteForward /tmp/riodelphino.macimed.sock /tmp/riodelphino.macimed.sock
+```
+Add to remote `/etc/ssh/sshd_config`:
+```ssh_config
+# Remove socket file on each SSH connection
+StreamLocalBindUnlink yes
+```
+Then set in your remote `macime.nvim` config:
+```lua
+socket = {
+   enabled = true,
+   forwarded = true,
+}
+```
+
+### SSH Socket Forwarding in Shared Hosting
+
+On shared hosting (rental servers), users are typically not allowed to write to directories like `/tmp/`.
+In that case, use a path under your home directory instead.
+
+~/.ssh/config:
+```ssh_config
+RemoteForward $HOME/.local/share/riodelphino.macimed.sock /tmp/riodelphino.macimed.sock
+RemoteCommand rm -f $HOME/.local/share/riodelphino.macimed.sock # Remove the socket file on each SSH connection
+```
+Then set in your remote `macime.nvim` config:
+```lua
+socket = {
+   enabled = true,
+   forwarded = true,
+   path = vim.fn.expand('~/.local/share/riodelphino.macimed.sock'),
+}
+```
 
 ## Checkhealth
 
@@ -123,6 +165,8 @@ It shows diagnostic information and gives useful advices about:
 - Socket
 - Homebrew Service
 
+> [!Info]
+> If `socket.forwarded = true`, `macime.nvim` skips all the checks.
 
 ## Issues
 

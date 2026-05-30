@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [v2.7.1](https://github.com/riodelphino/macime.nvim/compare/v2.7.0...v2.7.1) (2026-05-30)
+
+* **docs:** Add `SSH socket forwarding` sample config
+
 ## [v2.7.0](https://github.com/riodelphino/macime.nvim/compare/v2.6.1...v2.7.0) (2026-05-30)
 
 * **fix:** Wrap `vim.notify()` with `vim.schedule()`
